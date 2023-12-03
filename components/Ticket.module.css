@@ -1,0 +1,106 @@
+.div {
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  position: fixed;
+  bottom: 10px;
+  border-radius: 20px;
+  background-color: lightgray;
+  box-shadow: 70px 70px 200px rgb(0, 0, 0);
+}
+.left {
+  padding: 1rem;
+  background-color: aquamarine;
+}
+.div1 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.div1 span {
+  padding: 0.2rem 1rem;
+  font-size: 200%;
+  width: 33.3%;
+  text-align: center;
+}
+.div1 span:nth-child(3) {
+  color: rgb(193, 86, 86);
+  text-align: right;
+  text-shadow: 1px 1px 1px black;
+}
+.div1 span:nth-child(3):hover {
+  cursor: pointer;
+}
+.div2 {
+  display: flex;
+  flex-direction: row;
+}
+
+.div2 .LowerDeck,
+.UpperDeck {
+  width: 48%;
+}
+
+.legand {
+  display: flex;
+}
+.legandBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0px 0.5rem;
+}
+.legandBox div:nth-child(1) {
+  width: 15px;
+  height: 15px;
+}
+.avl {
+  background-color: lightgray;
+  border: 1px solid black;
+}
+.female {
+  background-color: rgb(182, 0, 30);
+}
+.booked {
+  background-color: gray;
+}
+.UpperDeck {
+  display: flex;
+  flex-direction: row;
+  width: 35rem;
+  background-color: rgb(255, 255, 255);
+  margin: 1rem;
+  align-items: center;
+}
+.UpperSeats {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 1rem;
+}
+.seater {
+  width: 40px;
+  height: 40px;
+  border: 1px solid gray;
+  margin: 0.2rem 0.4rem;
+}
+
+.sleeper {
+  width: 70px;
+  height: 35px;
+  margin-top: 2rem;
+  margin-right: 1.7rem;
+  border: 1px solid gray;
+}
+
+.LowerDeck {
+  display: flex;
+  flex-direction: row;
+  width: 35rem;
+  /* flex-wrap: wrap; */
+  background-color: rgb(255, 255, 255);
+  margin: 1rem;
+}
+.LowerDeck .sleeper {
+  margin-left: 0.5rem;
+}
