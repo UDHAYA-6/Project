@@ -4,40 +4,6 @@ import { useRouter } from "next/router";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 const Login = () => {
   const router = useRouter();
-  const formSubmit = async (event) => {
-    event.preventDefault();
-    console.log({ Name, Email, Pass, Confrim });
-    if (Login) {
-      const response = await fetch("/api/login", {
-        method: "POST",
-        body: JSON.stringify({ Email, Pass }),
-        headers: { "Content-Type": "application/json" },
-      });
-      const jsonData = await response.json();
-
-      if (response.status === 200) {
-        console.log(jsonData);
-        router.push("/page");
-      } else {
-        alert(jsonData.msg);
-        console.log(jsonData.msg);
-      }
-    } else {
-      const response = await fetch("api/reg", {
-        method: "POST",
-        body: JSON.stringify({ Name, Email, Pass }),
-        headers: { "Content-Type": "application/json" },
-      });
-      const jsonData = await response.json();
-      console.log(jsonData.msg);
-      if (response.status === 200) {
-        router.push("/Page");
-      } else {
-        alert(jsonData.msg);
-        console.log(jsonData.msg);
-      }
-    }
-  };
   const [Login, setLogin] = useState(true);
   const [Name, setName] = useState("");
   const [Email, SetEmail] = useState("");
@@ -115,6 +81,41 @@ const Login = () => {
     setPassEye(false);
     setConfEye(false);
   };
+  const formSubmit = async (event) => {
+    event.preventDefault();
+    if (Login) {
+      try {
+        const response = await fetch("/api/login", {
+          method: "POST",
+          body: JSON.stringify({ Email, Pass }),
+          headers: { "Content-Type": "application/json" },
+        });
+        const jsonData = await response.json();
+        if (response.status === 200) {
+          router.push("/page");
+        } else {
+          alert(jsonData.msg);
+        }
+      } catch (error) {
+        alert("Check your internet connection");
+      }
+    } else {
+      const response = await fetch("api/reg", {
+        method: "POST",
+        body: JSON.stringify({ Name, Email, Pass }),
+        headers: { "Content-Type": "application/json" },
+      });
+      const jsonData = await response.json();
+      console.log(jsonData.msg);
+      if (response.status === 200) {
+        router.push("/page");
+      } else {
+        alert(jsonData.msg);
+        console.log(jsonData.msg);
+      }
+    }
+  };
+
   return (
     <div className={classes.body}>
       <div className={classes.div1}>

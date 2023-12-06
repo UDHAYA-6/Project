@@ -10,7 +10,6 @@
 }
 .left {
   padding: 1rem;
-  background-color: aquamarine;
 }
 .div1 {
   display: flex;
@@ -34,11 +33,6 @@
 .div2 {
   display: flex;
   flex-direction: row;
-}
-
-.div2 .LowerDeck,
-.UpperDeck {
-  width: 48%;
 }
 
 .legand {
@@ -69,6 +63,7 @@
   flex-direction: row;
   width: 35rem;
   background-color: rgb(255, 255, 255);
+  border-radius: 10px;
   margin: 1rem;
   align-items: center;
 }
@@ -83,24 +78,64 @@
   height: 40px;
   border: 1px solid gray;
   margin: 0.2rem 0.4rem;
+  border-radius: 5px;
+  text-align: center;
 }
 
 .sleeper {
   width: 70px;
   height: 35px;
+  text-align: center;
   margin-top: 2rem;
   margin-right: 1.7rem;
   border: 1px solid gray;
+  border-radius: 5px;
 }
 
 .LowerDeck {
   display: flex;
   flex-direction: row;
   width: 35rem;
-  /* flex-wrap: wrap; */
+  flex-wrap: wrap;
   background-color: rgb(255, 255, 255);
   margin: 1rem;
+  border-radius: 10px;
 }
 .LowerDeck .sleeper {
-  margin-left: 0.5rem;
+  margin-left: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.selector {
+  margin: 0px 1rem;
+}
+.selector input {
+  margin: 0px 0.5rem;
+}
+.selector button {
+  border: none;
+  border-radius: 3px;
+  background-color: orange;
+  color: rgb(0, 0, 0);
+  font-size: 1.1rem;
+  box-shadow: 2px 2px 2px gray;
+}
+.selector .abled:hover {
+  cursor: pointer;
+  opacity: 1;
+  background-color: rgb(255, 255, 0);
+  box-shadow: 2px 2px 2px black;
+}
+.selector .disable {
+  cursor: no-drop;
+  opacity: 0.5;
+}
+.dis {
+  cursor: no-drop;
+  opacity: 0.3;
+}
+.Booked {
+  background-color: gray;
+  cursor: no-drop;
+  color: white;
 }

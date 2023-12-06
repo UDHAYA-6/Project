@@ -2,7 +2,6 @@ import { ConnectToDatabase } from "../../Mongodb/mongodb";
 export default async function handler(req, res) {
   if (req.method === "POST") {
     const { Email, Pass } = req.body;
-    console.log({ Email, Pass });
     try {
       const cl = await ConnectToDatabase();
       const client = await cl.connect();
@@ -13,15 +12,15 @@ export default async function handler(req, res) {
       if (user) {
         res.status(200).json(user);
       } else {
-        res.status(405).json({ msg: "No user found" });
+        res.status(404).json({ msg: "No user found" });
       }
       client.close();
     } catch (error) {
       client.close();
-      console.error(error);
-      res.status(500).json({ msg: "Server Error" + error.message });
+      res.status(500).json({ msg: "Server Error" + error });
     }
   } else {
-    res.status(405).json({ msg: "Method Not Allowed" });
+    client.close();
+    res.status(405).json({ msg: "Method Not Allowded" });
   }
 }
