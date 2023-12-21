@@ -1,0 +1,62 @@
+.div {
+    width: 40rem;
+    height: 18rem;
+    border-radius: 20px;
+    box-shadow: 3px 6px 6px rgb(87, 86, 86);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: row;
+}
+
+.div div:nth-child(1) {
+    width: 30%;
+    background-color: rgb(1, 83, 56);
+    height: 100%;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.div div:nth-child(2) {
+    width: 70%;
+    height: 100%;
+    background-color: rgb(35, 3, 66);
+    color: lightgray;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.div div:nth-child(1) p {
+    color: lightgray;
+    font-size: 5.5rem;
+    padding-left: 22px;
+}
+
+.div div:nth-child(2) p {
+    font-size: 1.3rem;
+}
+
+.div center {
+    margin-top: 6.5rem;
+}
+
+.div button {
+    border: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 7rem;
+    font-size: 1.5rem;
+    color: green;
+    background-color: rgb(174, 196, 219);
+    border-radius: 5px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.div button:hover {
+    cursor: pointer;
+    font-size: 1.6rem;
+    width: 7.5rem;
+}

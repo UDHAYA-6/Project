@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import classes from "./Ticket.module.css";
 const Ticket = (props) => {
   const data = props.Data;
-  console.log(data);
+  // console.log(data);
   const [MaleCount, setMaleCount] = useState(0);
   const [FemaleCount, setFemaleCount] = useState(0);
   const [Disable, setDisable] = useState(true);
   const [Show, setShow] = useState(false);
+  const [PickedSeats, setPickedSeats] = useState([]);
   const GenderSelected = (event) => {
     event.preventDefault();
     if (!Disable) {
@@ -16,6 +17,7 @@ const Ticket = (props) => {
     }
   };
   const closeWindow = () => {
+    setPickedSeats([]);
     props.close();
   };
   const MaleChange = (event) => {
@@ -40,7 +42,24 @@ const Ticket = (props) => {
       setDisable(true);
     }
   };
-  const SelecetedSeats = (event, no) => {};
+  const total = Number(MaleCount) + Number(FemaleCount);
+  const SelectedSeats = (no) => {
+    const count = PickedSeats.filter((item) => item == no).length;
+    if (PickedSeats.length === total && count <= 0) {
+      alert("you reaced the max limit");
+    } else if (count >= 1) {
+      const updatedList = PickedSeats.filter((item) => item !== no);
+      setPickedSeats(updatedList);
+    } else if (length.PickedSeats === undefined || PickedSeats.length < total) {
+      setPickedSeats([...PickedSeats, no]);
+    }
+    console.log("count", count);
+    console.log("total", total);
+    console.log("Picked", PickedSeats);
+    console.log("length", PickedSeats.length);
+    console.log(length.PickedSeats === total);
+  };
+  console.log("Seats:", PickedSeats);
   return (
     <div className={classes.div}>
       <div className={classes.div1}>
@@ -105,33 +124,43 @@ const Ticket = (props) => {
                 <div
                   key={seat.seat_num}
                   className={`${classes.seater} ${
-                    seat.seatStatus === "Booked" ? classes.Booked : " "
+                    seat.seatStatus == "Booked"
+                      ? classes.Booked
+                      : classes.available
+                  } ${
+                    PickedSeats.indexOf(seat.seat_num) !== -1
+                      ? classes.select
+                      : " "
                   }`}
+                  onClick={
+                    seat.seatStatus == "Available"
+                      ? () => SelectedSeats(seat.seat_num)
+                      : () => {}
+                  }
                 >
                   {seat.seat_num}
-                  {seat.seatStatus === "Available" && (
-                    <input
-                      type="checkbox"
-                      onChange={() => SelecetedSeats(seat.seat_num)}
-                    />
-                  )}
                 </div>
               ))}
 
               {data.Seats.Lower.sleeper.map((seat) => (
                 <div
                   key={seat.seat_num}
+                  onClick={
+                    seat.seatStatus == "Available"
+                      ? () => SelectedSeats(seat.seat_num)
+                      : () => {}
+                  }
                   className={`${classes.sleeper} ${
-                    seat.seatStatus === "Booked" ? classes.Booked : " "
+                    seat.seatStatus === "Booked"
+                      ? classes.Booked
+                      : classes.available
+                  } ${
+                    PickedSeats.indexOf(seat.seat_num) !== -1
+                      ? classes.select
+                      : " "
                   }`}
                 >
                   {seat.seat_num}
-                  {seat.seatStatus === "Available" && (
-                    <input
-                      type="checkbox"
-                      onChange={() => SelecetedSeats(seat.seat_num)}
-                    />
-                  )}
                 </div>
               ))}
             </div>
@@ -140,22 +169,34 @@ const Ticket = (props) => {
             {data.Seats.Upper.Right.map((seat) => (
               <div
                 key={seat.seat_num}
+                onClick={
+                  seat.seatStatus == "Available"
+                    ? () => SelectedSeats(seat.seat_num)
+                    : () => {}
+                }
                 className={`${classes.sleeper} ${
-                  seat.seatStatus === "Booked" ? classes.Booked : " "
+                  seat.seatStatus === "Booked"
+                    ? classes.Booked
+                    : classes.available
+                } ${
+                  PickedSeats.indexOf(seat.seat_num) !== -1
+                    ? classes.select
+                    : " "
                 }`}
               >
                 {seat.seat_num}
-                {seat.seatStatus === "Available" && (
-                  <input
-                    type="checkbox"
-                    onChange={() => SelecetedSeats(seat.seat_num)}
-                  />
-                )}
               </div>
             ))}
           </div>
         </div>
-        <div className={classes.right}></div>
+        <div className={classes.right}>
+          {!Show && (
+            <div className={classes.helper}>
+              Please select the total number of male and female seats to
+              continue booking 1
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

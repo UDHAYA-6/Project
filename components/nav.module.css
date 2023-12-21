@@ -1,9 +1,10 @@
 .nav {
   width: 100%;
   display: flex;
-  border-top-right-radius: 5px;
-  border-top-left-radius: 5px;
-  background-color: #202244;
+  /* position: fixed;
+  top: 0;
+  left: 0;
+  right: 0; */
   background-color: #141528;
   flex-direction: row;
   color: rgb(255, 255, 255);

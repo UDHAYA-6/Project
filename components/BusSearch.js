@@ -1,6 +1,7 @@
 import classes from "./BusSearch.module.css";
 import React, { useState } from "react";
 import cities from "../Data/cities.json";
+import Title from "./Animation/title";
 
 const BusSearch = (props) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -65,6 +66,7 @@ const BusSearch = (props) => {
               instantly and embark on a journey of simplicity and speed
             </p>
           </div>
+          <Title />
         </div>
       </div>
 

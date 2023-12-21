@@ -139,3 +139,18 @@
   cursor: no-drop;
   color: white;
 }
+
+.helper {
+  font-size: 2rem;
+  display: grid;
+  height: 100%;
+  width: 300px;
+  place-items: center;
+  opacity: 0.9;
+  text-align: justify;
+}
+.select {
+  background-color: rgb(18, 162, 18);
+  color: white;
+  cursor: pointer;
+}
