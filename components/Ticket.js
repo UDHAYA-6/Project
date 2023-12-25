@@ -1,65 +1,115 @@
 import React, { useState } from "react";
 import classes from "./Ticket.module.css";
+import Legand from "./Legand/Legand";
+import GenderForm from "./GenderSelection/GenderForm";
+import { useRouter } from "next/router";
+import { getSession, useSession } from "next-auth/react";
+
 const Ticket = (props) => {
-  const data = props.Data;
-  // console.log(data);
-  const [MaleCount, setMaleCount] = useState(0);
-  const [FemaleCount, setFemaleCount] = useState(0);
-  const [Disable, setDisable] = useState(true);
+  const router = useRouter();
+  const { data: session } = useSession();
   const [Show, setShow] = useState(false);
   const [PickedSeats, setPickedSeats] = useState([]);
-  const GenderSelected = (event) => {
-    event.preventDefault();
-    if (!Disable) {
-      setShow(true);
-    } else {
-      setShow(false);
-    }
+  const [formData, setFormData] = useState([]);
+  const [MaleCount, setMaleCount] = useState(0);
+  const [FemaleCount, setFemaleCount] = useState(0);
+  const [fem, SetFem] = useState([]);
+  const data = props.Data;
+  // console.log(data);
+  const women = data.Seats.Lower.Seater;
+  const ReservedWomenSeats = women
+    .filter((item) => {
+      return (
+        item.seatStatus === "Booked" &&
+        item.passengerDetails &&
+        item.passengerDetails.Gender === "Female"
+      );
+    })
+    .map((femaleSeat) => {
+      const seatNumber = femaleSeat.seat_num;
+      const prefix = seatNumber.substring(0, 2);
+      const numberPart = seatNumber.substring(2);
+      const K = Number(numberPart);
+      return `${prefix}${K <= 9 ? K + 9 : K - 9}`;
+    });
+
+  console.log("Reserved Women Seats:", ReservedWomenSeats);
+
+  const GetShow = (value) => {
+    setShow(value);
+  };
+  const Male = (count) => {
+    setMaleCount(count);
+  };
+  const Female = (count) => {
+    setFemaleCount(count);
+  };
+  const handleInputChange = (index, fieldName, value) => {
+    const updatedData = [...formData];
+    updatedData[index] = { ...updatedData[index], [fieldName]: value };
+    setFormData(updatedData);
   };
   const closeWindow = () => {
     setPickedSeats([]);
     props.close();
   };
-  const MaleChange = (event) => {
-    setMaleCount(event.target.value);
-    if (
-      parseInt(event.target.value) + parseInt(FemaleCount) <= 5 &&
-      parseInt(event.target.value) + parseInt(FemaleCount) !== 0
-    ) {
-      setDisable(false);
-    } else {
-      setDisable(true);
-    }
-  };
-  const FemaleChange = (event) => {
-    setFemaleCount(event.target.value);
-    if (
-      parseInt(event.target.value) + parseInt(MaleCount) <= 5 &&
-      parseInt(event.target.value) + parseInt(MaleCount) !== 0
-    ) {
-      setDisable(false);
-    } else {
-      setDisable(true);
-    }
-  };
-  const total = Number(MaleCount) + Number(FemaleCount);
-  const SelectedSeats = (no) => {
-    const count = PickedSeats.filter((item) => item == no).length;
-    if (PickedSeats.length === total && count <= 0) {
-      alert("you reaced the max limit");
-    } else if (count >= 1) {
-      const updatedList = PickedSeats.filter((item) => item !== no);
+
+  const total = MaleCount + FemaleCount;
+
+  console.log("Picked seats", PickedSeats);
+
+  const SelectedSeats = (num) => {
+    const isSelected = PickedSeats.includes(num);
+    const isReserved = ReservedWomenSeats.includes(num);
+    if (PickedSeats.length === total && !isSelected) {
+      alert("You reached the max limit");
+    } else if (isSelected) {
+      const updatedList = PickedSeats.filter((item) => item !== num);
       setPickedSeats(updatedList);
-    } else if (length.PickedSeats === undefined || PickedSeats.length < total) {
-      setPickedSeats([...PickedSeats, no]);
+      if (isReserved) {
+        const update = fem.filter((item) => item !== num);
+        SetFem(update);
+      }
+    } else if (!isSelected && !isReserved) {
+      setPickedSeats([...PickedSeats, num]);
+    } else if (!isSelected && isReserved && FemaleCount == 0 && MaleCount > 0) {
+      alert(`You can't book a men seat near ladies seat`);
+    } else if (!isSelected && isReserved && MaleCount == 0 && FemaleCount > 0) {
+      SetFem([...fem, num]);
+      setPickedSeats([...PickedSeats, num]);
+    } else if (!isSelected && isReserved && MaleCount > 0 && FemaleCount > 0) {
+      if (fem.length < FemaleCount || fem.length === undefined) {
+        SetFem([...fem, num]);
+        setPickedSeats([...PickedSeats, num]);
+      } else if (fem.length == FemaleCount) {
+        alert(`You can't book a men seat near to a ladies seat`);
+      }
     }
-    console.log("count", count);
-    console.log("total", total);
-    console.log("Picked", PickedSeats);
-    console.log("length", PickedSeats.length);
-    console.log(length.PickedSeats === total);
   };
-  console.log("Seats:", PickedSeats);
+
+  const BookTickets = async (e) => {
+    e.preventDefault();
+    const newFormData = PickedSeats.map((seat, index) => ({
+      seatNumber: seat,
+      name: formData[index]?.name || "",
+      age: formData[index]?.age || "",
+      gender: formData[index]?.gender || "",
+    }));
+    const userSession = await getSession();
+    if (userSession) {
+      console.log("FormData:", { data: newFormData });
+      const response = await fetch("api/book", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ Get: newFormData, id: props.Data._id }),
+      });
+      const jsonData = await response.json();
+      alert(jsonData.msg);
+    } else {
+      window.open("/login", "_blank");
+    }
+  };
+
   return (
     <div className={classes.div}>
       <div className={classes.div1}>
@@ -69,54 +119,8 @@ const Ticket = (props) => {
       </div>
       <div className={classes.div2}>
         <div className={classes.left}>
-          <form onSubmit={GenderSelected}>
-            <span>Select No of seats:</span>
-            <span className={classes.selector}>
-              Male:
-              <input
-                type="number"
-                required
-                min={0}
-                max={5}
-                onChange={MaleChange}
-                placeholder="Select male"
-              />
-            </span>
-            <span className={classes.selector}>
-              Female:
-              <input
-                type="number"
-                required
-                onChange={FemaleChange}
-                min={0}
-                max={5}
-                placeholder="Select female"
-              />
-            </span>
-            <span className={classes.selector}>
-              <button
-                disabled={Disable}
-                className={Disable ? classes.disable : classes.abled}
-                type="submit"
-              >
-                Continue
-              </button>
-            </span>
-          </form>
-          <div className={classes.legand}>
-            <div className={classes.legandBox}>
-              <div className={classes.avl}></div>
-              <div>Available</div>
-            </div>
-            <div className={classes.legandBox}>
-              <div className={classes.female}></div>
-              <div>Female seats</div>
-            </div>
-            <div className={classes.legandBox}>
-              <div className={classes.booked}></div>
-              <div>Booked seats</div>
-            </div>
-          </div>
+          <GenderForm male={Male} female={Female} Show={GetShow} />
+          <Legand />
           <div className={`${classes.UpperDeck} ${!Show ? classes.dis : " "}`}>
             <div>hello</div>
             <div className={classes.UpperSeats}>
@@ -124,13 +128,11 @@ const Ticket = (props) => {
                 <div
                   key={seat.seat_num}
                   className={`${classes.seater} ${
-                    seat.seatStatus == "Booked"
+                    seat.seatStatus !== "Available"
                       ? classes.Booked
                       : classes.available
                   } ${
-                    PickedSeats.indexOf(seat.seat_num) !== -1
-                      ? classes.select
-                      : " "
+                    PickedSeats.includes(seat.seat_num) ? classes.select : " "
                   }`}
                   onClick={
                     seat.seatStatus == "Available"
@@ -151,7 +153,7 @@ const Ticket = (props) => {
                       : () => {}
                   }
                   className={`${classes.sleeper} ${
-                    seat.seatStatus === "Booked"
+                    seat.seatStatus !== "Available"
                       ? classes.Booked
                       : classes.available
                   } ${
@@ -166,7 +168,7 @@ const Ticket = (props) => {
             </div>
           </div>
           <div className={`${classes.LowerDeck} ${!Show ? classes.dis : " "}`}>
-            {data.Seats.Upper.Right.map((seat) => (
+            {data.Seats.Upper.map((seat) => (
               <div
                 key={seat.seat_num}
                 onClick={
@@ -175,7 +177,7 @@ const Ticket = (props) => {
                     : () => {}
                 }
                 className={`${classes.sleeper} ${
-                  seat.seatStatus === "Booked"
+                  seat.seatStatus !== "Available"
                     ? classes.Booked
                     : classes.available
                 } ${
@@ -195,6 +197,57 @@ const Ticket = (props) => {
               Please select the total number of male and female seats to
               continue booking 1
             </div>
+          )}
+          {PickedSeats.length > 0 && (
+            <form onSubmit={BookTickets}>
+              {PickedSeats.map((item, index) => (
+                <div
+                  key={index}
+                  style={{ display: "flex", flexDirection: "row" }}
+                >
+                  <span>{index + 1}</span>
+                  <span>Seat no: {item}</span>
+                  <input
+                    type="text"
+                    placeholder="Name"
+                    value={formData[index]?.name || ""}
+                    onChange={(e) =>
+                      handleInputChange(index, "name", e.target.value)
+                    }
+                    required
+                  />
+                  <input
+                    type="number"
+                    placeholder="Age"
+                    value={formData[index]?.age || ""}
+                    onChange={(e) =>
+                      handleInputChange(index, "age", e.target.value)
+                    }
+                    required
+                  />
+                  <select
+                    value={formData[index]?.gender || ""}
+                    onChange={(e) =>
+                      handleInputChange(index, "gender", e.target.value)
+                    }
+                    required
+                  >
+                    <option value="" disabled>
+                      Select Gender
+                    </option>
+                    {fem.includes(item) ? (
+                      <option value="Female">female</option>
+                    ) : (
+                      <>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                      </>
+                    )}
+                  </select>
+                </div>
+              ))}
+              <button type="submit">Pay</button>
+            </form>
           )}
         </div>
       </div>

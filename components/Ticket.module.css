@@ -35,29 +35,6 @@
   flex-direction: row;
 }
 
-.legand {
-  display: flex;
-}
-.legandBox {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0px 0.5rem;
-}
-.legandBox div:nth-child(1) {
-  width: 15px;
-  height: 15px;
-}
-.avl {
-  background-color: lightgray;
-  border: 1px solid black;
-}
-.female {
-  background-color: rgb(182, 0, 30);
-}
-.booked {
-  background-color: gray;
-}
 .UpperDeck {
   display: flex;
   flex-direction: row;
@@ -106,30 +83,7 @@
   margin-bottom: 1rem;
 }
 
-.selector {
-  margin: 0px 1rem;
-}
-.selector input {
-  margin: 0px 0.5rem;
-}
-.selector button {
-  border: none;
-  border-radius: 3px;
-  background-color: orange;
-  color: rgb(0, 0, 0);
-  font-size: 1.1rem;
-  box-shadow: 2px 2px 2px gray;
-}
-.selector .abled:hover {
-  cursor: pointer;
-  opacity: 1;
-  background-color: rgb(255, 255, 0);
-  box-shadow: 2px 2px 2px black;
-}
-.selector .disable {
-  cursor: no-drop;
-  opacity: 0.5;
-}
+
 .dis {
   cursor: no-drop;
   opacity: 0.3;

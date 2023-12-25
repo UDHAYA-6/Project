@@ -1,0 +1,23 @@
+.legand {
+  display: flex;
+}
+.legandBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0px 0.5rem;
+}
+.legandBox div:nth-child(1) {
+  width: 15px;
+  height: 15px;
+}
+.avl {
+  background-color: lightgray;
+  border: 1px solid black;
+}
+.female {
+  background-color: rgb(182, 0, 30);
+}
+.booked {
+  background-color: gray;
+}
