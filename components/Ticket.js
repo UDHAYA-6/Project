@@ -16,13 +16,13 @@ const Ticket = (props) => {
   const [fem, SetFem] = useState([]);
   const data = props.Data;
   // console.log(data);
-  const women = data.Seats.Lower.Seater;
-  const ReservedWomenSeats = women
+  const womenLowerSeater = data.Seats.Lower.Seater;
+  const LowerSeater = womenLowerSeater
     .filter((item) => {
       return (
         item.seatStatus === "Booked" &&
         item.passengerDetails &&
-        item.passengerDetails.Gender === "Female"
+        item.passengerDetails.gender === "Female"
       );
     })
     .map((femaleSeat) => {
@@ -32,6 +32,26 @@ const Ticket = (props) => {
       const K = Number(numberPart);
       return `${prefix}${K <= 9 ? K + 9 : K - 9}`;
     });
+
+  const womenUpperRightDeck = data.Seats.Upper.Right;
+  console.log(womenUpperRightDeck);
+  const UpperRight = womenUpperRightDeck
+    .filter((item) => {
+      return (
+        item.seatStatus === "Booked" &&
+        item.passengerDetails &&
+        item.passengerDetails.gender == "Female"
+      );
+    })
+    .map((femaleSeat) => {
+      const seatNumber = femaleSeat.seat_num;
+      const prefix = seatNumber.substring(0, 2);
+      const numberPart = seatNumber.substring(2);
+      const K = Number(numberPart);
+      return `${prefix}${K <= 5 ? K + 5 : K - 5}`;
+    });
+  console.log(UpperRight);
+  const ReservedWomenSeats = [...LowerSeater, ...UpperRight];
 
   console.log("Reserved Women Seats:", ReservedWomenSeats);
 
@@ -105,7 +125,9 @@ const Ticket = (props) => {
       });
       const jsonData = await response.json();
       alert(jsonData.msg);
+      router.push("/");
     } else {
+      alert("Login to continue booking");
       window.open("/login", "_blank");
     }
   };
@@ -133,7 +155,20 @@ const Ticket = (props) => {
                       : classes.available
                   } ${
                     PickedSeats.includes(seat.seat_num) ? classes.select : " "
-                  }`}
+                  }
+                  ${
+                    ReservedWomenSeats.includes(seat.seat_num) &&
+                    seat.seatStatus === "Available"
+                      ? classes.Reserved
+                      : ""
+                  }
+                  ${
+                    seat.seatStatus !== "Available" &&
+                    seat.passengerDetails.gender == "Female"
+                      ? classes.pink
+                      : " "
+                  }
+                  `}
                   onClick={
                     seat.seatStatus == "Available"
                       ? () => SelectedSeats(seat.seat_num)
@@ -168,7 +203,28 @@ const Ticket = (props) => {
             </div>
           </div>
           <div className={`${classes.LowerDeck} ${!Show ? classes.dis : " "}`}>
-            {data.Seats.Upper.map((seat) => (
+            {data.Seats.Upper.Right.map((seat) => (
+              <div
+                key={seat.seat_num}
+                onClick={
+                  seat.seatStatus == "Available"
+                    ? () => SelectedSeats(seat.seat_num)
+                    : () => {}
+                }
+                className={`${classes.UpperRight} ${
+                  seat.seatStatus !== "Available"
+                    ? classes.Booked
+                    : classes.available
+                } ${
+                  PickedSeats.indexOf(seat.seat_num) !== -1
+                    ? classes.select
+                    : " "
+                }`}
+              >
+                {seat.seat_num}
+              </div>
+            ))}
+            {data.Seats.Upper.Left.map((seat) => (
               <div
                 key={seat.seat_num}
                 onClick={

@@ -2,8 +2,10 @@ import { ConnectToDatabase } from "../../Mongodb/mongodb";
 export default async function handler(req, res) {
   if (req.method === "GET") {
     const { from, to } = req.query;
+
     try {
       const cl = await ConnectToDatabase();
+      console.log("sd14756", { from, to });
       const client = await cl.connect();
       const db = client.db("Transport");
       const data = await db

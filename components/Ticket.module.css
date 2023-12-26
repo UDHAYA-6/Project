@@ -69,6 +69,17 @@
   border-radius: 5px;
 }
 
+.UpperRight {
+  width: 70px;
+  height: 35px;
+  border: 1px solid gray;
+  margin-top: 0.5rem;
+  margin-right: 1.7rem;
+  margin-left: 0.6rem;
+  border-radius: 5px;
+  text-align: center;
+}
+
 .LowerDeck {
   display: flex;
   flex-direction: row;
@@ -82,7 +93,6 @@
   margin-left: 0.8rem;
   margin-bottom: 1rem;
 }
-
 
 .dis {
   cursor: no-drop;
@@ -107,4 +117,11 @@
   background-color: rgb(18, 162, 18);
   color: white;
   cursor: pointer;
+}
+
+.Reserved {
+  background-color: rgb(245, 213, 218);
+}
+.pink {
+  background-color: rgb(238, 76, 103);
 }
