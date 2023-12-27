@@ -143,6 +143,7 @@ const Ticket = (props) => {
         <div className={classes.left}>
           <GenderForm male={Male} female={Female} Show={GetShow} />
           <Legand />
+          <center>Lower Deck</center>
           <div className={`${classes.UpperDeck} ${!Show ? classes.dis : " "}`}>
             <div>hello</div>
             <div className={classes.UpperSeats}>
@@ -202,6 +203,7 @@ const Ticket = (props) => {
               ))}
             </div>
           </div>
+          <center>Upper Deck</center>
           <div className={`${classes.LowerDeck} ${!Show ? classes.dis : " "}`}>
             {data.Seats.Upper.Right.map((seat) => (
               <div
@@ -218,6 +220,18 @@ const Ticket = (props) => {
                 } ${
                   PickedSeats.indexOf(seat.seat_num) !== -1
                     ? classes.select
+                    : " "
+                }
+                ${
+                  ReservedWomenSeats.includes(seat.seat_num) &&
+                  seat.seatStatus === "Available"
+                    ? classes.Reserved
+                    : ""
+                }
+                ${
+                  seat.seatStatus !== "Available" &&
+                  seat.passengerDetails.gender == "Female"
+                    ? classes.pink
                     : " "
                 }`}
               >
@@ -255,7 +269,7 @@ const Ticket = (props) => {
             </div>
           )}
           {PickedSeats.length > 0 && (
-            <form onSubmit={BookTickets}>
+            <form onSubmit={BookTickets} className={classes.form}>
               {PickedSeats.map((item, index) => (
                 <div
                   key={index}

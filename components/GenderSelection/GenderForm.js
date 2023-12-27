@@ -28,8 +28,8 @@ const GenderForm = (props) => {
     setDisable(total <= 0 || total > 5);
   };
   return (
-    <>
-      <form onSubmit={GenderSelected}>
+    <div className={classes.div}>
+      <form onSubmit={GenderSelected} className={classes.form}>
         <span>Select No of seats:</span>
         <span className={classes.selector}>
           Male:
@@ -63,15 +63,15 @@ const GenderForm = (props) => {
           </button>
         </span>
       </form>
-      {Description && (
-        <div>
-          <h3>
-            You can book total of {Number(MaleCount) + Number(FemaleCount)}{" "}
+      <div>
+        {Description && (
+          <center>
+            You can book total of {Number(MaleCount) + Number(FemaleCount)}
             seats
-          </h3>
-        </div>
-      )}
-    </>
+          </center>
+        )}
+      </div>
+    </div>
   );
 };
 

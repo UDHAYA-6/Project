@@ -5,11 +5,10 @@ export default async function handler(req, res) {
 
     try {
       const cl = await ConnectToDatabase();
-      console.log("sd14756", { from, to });
       const client = await cl.connect();
-      const db = client.db("Transport");
+      const db = client.db("ukdb");
       const data = await db
-        .collection("Buses")
+        .collection("Bus")
         .find({ Via: from, Via: to })
         .toArray();
       if (data.length !== 0) {

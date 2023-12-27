@@ -2,6 +2,9 @@ import classes from "./BusSearch.module.css";
 import React, { useState } from "react";
 import cities from "../Data/cities.json";
 import Title from "./Animation/title";
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
+import { Button } from "@mui/material";
 
 const BusSearch = (props) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -53,6 +56,7 @@ const BusSearch = (props) => {
       setLoad(false);
     }
   };
+
   return (
     <div className={classes.container}>
       <div className={classes.left}>
@@ -72,7 +76,26 @@ const BusSearch = (props) => {
 
       <div className={classes.right}>
         <form className={classes.form} onSubmit={formSubmit}>
-          <div className={classes.div}>
+          <Autocomplete
+            disablePortal
+            id="combo-box-demo"
+            options={cities}
+            sx={{ width: 300 }}
+            onChange={handleInputChange}
+            renderInput={(params) => <TextField {...params} label="From" />}
+          />
+          <Autocomplete
+            disablePortal
+            id="combo-box-demo"
+            options={cities}
+            onChange={handleInputChange2}
+            sx={{ width: 300 }}
+            renderInput={(params) => <TextField {...params} label="To" />}
+          />
+
+          <Button type="submit">Search</Button>
+
+          {/* <div className={classes.div}>
             <label>From</label>
             <input
               type="text"
@@ -123,8 +146,8 @@ const BusSearch = (props) => {
             <input type="date" required />
           </div>
           <center>
-            <button type="submit">Search</button>
-          </center>
+            <Button type="submit">Search</Button>
+          </center> */}
         </form>
       </div>
     </div>

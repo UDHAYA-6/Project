@@ -9,11 +9,15 @@ const Legand = () => {
       </div>
       <div className={classes.legandBox}>
         <div className={classes.female}></div>
-        <div>Female seats</div>
+        <div>Booked Female</div>
       </div>
       <div className={classes.legandBox}>
         <div className={classes.booked}></div>
-        <div>Booked seats</div>
+        <div>Booked Male</div>
+      </div>
+      <div className={classes.legandBox}>
+        <div className={classes.Reserved}></div>
+        <div>Female Seats</div>
       </div>
     </div>
   );

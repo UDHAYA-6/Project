@@ -1,5 +1,6 @@
 .legand {
   display: flex;
+  margin-bottom: 1rem;
 }
 .legandBox {
   display: flex;
@@ -16,8 +17,12 @@
   border: 1px solid black;
 }
 .female {
-  background-color: rgb(182, 0, 30);
+  background-color: rgb(238, 76, 103);
 }
 .booked {
   background-color: gray;
+}
+.Reserved {
+  border: 1px solid palevioletred;
+  box-shadow: 1px 1px 2px rgb(216, 123, 123);
 }

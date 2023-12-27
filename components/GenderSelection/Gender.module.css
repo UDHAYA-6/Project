@@ -22,3 +22,18 @@
   cursor: no-drop;
   opacity: 0.5;
 }
+
+.div {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  right: 80px;
+  top: 60px;
+  position: absolute;
+}
+
+.div center {
+  font-size: 1.2rem;
+  text-align: center;
+  color: green;
+}

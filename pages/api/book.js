@@ -65,8 +65,8 @@ export default async function handler(req, res) {
     try {
       const cl = await ConnectToDatabase();
       const client = await cl.connect();
-      const db = client.db("Transport");
-      const collection = await db.collection("Buses");
+      const db = client.db("ukdb");
+      const collection = await db.collection("Bus");
 
       for (const seatData of Get) {
         const { seatNumber, name, age, gender } = seatData;
