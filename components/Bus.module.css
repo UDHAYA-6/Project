@@ -30,31 +30,3 @@
   font-size: 1.3rem;
   justify-content: space-between;
 }
-.btn {
-  background-color: #131438;
-  border: none;
-  color: whitesmoke;
-  font-size: 1.5rem;
-  padding: 0.7rem 3rem;
-  border-radius: 7px;
-  box-shadow: 4px 4px 10px gray;
-}
-.btn:hover {
-  cursor: pointer;
-  background-color: transparent;
-  border: 2px solid #131438;
-  color: #131438;
-}
-/* .styles {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-}
-.design {
-  width: 100px;
-  height: 100px;
-  background-color: #131438;
-  border-radius: 50%;
-} */

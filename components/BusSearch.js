@@ -5,58 +5,63 @@ import Title from "./Animation/title";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { Button } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import SwapVertIcon from "@mui/icons-material/SwapVert";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const BusSearch = (props) => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [searchTerm2, setSearchTerm2] = useState("");
+  const [searchTerm, setSearchTerm] = useState(null);
+  const [searchTerm2, setSearchTerm2] = useState(null);
   const [load, setLoad] = useState(false);
-  const [filteredCities, setFilteredCities] = useState([]);
-  const [filteredCities2, setFilteredCities2] = useState([]);
-  const handleInputChange = (e) => {
-    const term = e.target.value;
-    setSearchTerm(term);
-    const filtered = cities.filter((city) =>
-      city.toLowerCase().startsWith(term.toLowerCase())
-    );
-    setFilteredCities(filtered);
+
+  const handleInputChange = (event, newValue) => {
+    setSearchTerm(newValue);
   };
 
-  const handleInputChange2 = (e) => {
-    const term = e.target.value;
-    setSearchTerm2(term);
-    const filtered = cities.filter((city) =>
-      city.toLowerCase().startsWith(term.toLowerCase())
-    );
-    setFilteredCities2(filtered);
-  };
-
-  const handleCitySelect2 = (city) => {
-    setSearchTerm2(city);
-    setFilteredCities2([]);
-  };
-
-  const handleCitySelect = (city) => {
-    setSearchTerm(city);
-    setFilteredCities([]);
+  const handleInputChange2 = (event, newValue) => {
+    setSearchTerm2(newValue);
   };
 
   const formSubmit = async (event) => {
     event.preventDefault();
     setLoad(true);
+    console.log({ searchTerm, searchTerm2 });
     const response = await fetch(
       `/api/fetch?from=${searchTerm}&to=${searchTerm2}`
     );
     const jsonData = await response.json();
     if (response.status === 200) {
+      setLoad(false);
       console.log(jsonData);
       props.getData(jsonData);
-      setLoad(false);
     } else {
       console.log(jsonData.msg);
       setLoad(false);
     }
   };
-
+  const swap = () => {
+    const newVar = searchTerm;
+    setSearchTerm(searchTerm2);
+    setSearchTerm2(newVar);
+  };
+  const styles = {
+    width: 300,
+    "& .MuiInputLabel-root": {
+      color: "white",
+    },
+    "& .MuiInputBase-input": {
+      color: "white",
+    },
+    "& .MuiOutlinedInput-root": {
+      borderColor: "white",
+    },
+    "& .MuiOutlinedInput-notchedOutline": {
+      borderColor: "white",
+    },
+    "&:hover .MuiOutlinedInput-notchedOutline": {
+      borderColor: "white",
+    },
+  };
   return (
     <div className={classes.container}>
       <div className={classes.left}>
@@ -77,77 +82,61 @@ const BusSearch = (props) => {
       <div className={classes.right}>
         <form className={classes.form} onSubmit={formSubmit}>
           <Autocomplete
+            className={classes.Autocomplete}
             disablePortal
-            id="combo-box-demo"
             options={cities}
-            sx={{ width: 300 }}
+            sx={styles}
+            value={searchTerm}
             onChange={handleInputChange}
-            renderInput={(params) => <TextField {...params} label="From" />}
+            getOptionLabel={(option) => option}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="From"
+                required
+                InputLabelProps={{ sx: { fontSize: "1.3rem" } }}
+              />
+            )}
           />
+          <center>
+            <SwapVertIcon
+              className={classes.swap}
+              fontSize="large"
+              color="primary"
+              onClick={swap}
+            ></SwapVertIcon>
+          </center>
           <Autocomplete
             disablePortal
-            id="combo-box-demo"
+            className={classes.Autocomplete}
             options={cities}
+            sx={styles}
+            value={searchTerm2}
             onChange={handleInputChange2}
-            sx={{ width: 300 }}
-            renderInput={(params) => <TextField {...params} label="To" />}
+            getOptionLabel={(option) => option}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="To"
+                required
+                InputLabelProps={{ sx: { fontSize: "1.3rem" } }}
+              />
+            )}
           />
-
-          <Button type="submit">Search</Button>
-
-          {/* <div className={classes.div}>
-            <label>From</label>
-            <input
-              type="text"
-              placeholder="From"
-              value={searchTerm}
-              required
-              onChange={handleInputChange}
-            />
-            {searchTerm.length > 0 && (
-              <ul className={classes.ul}>
-                {filteredCities.map((city) => (
-                  <li
-                    className={classes.li}
-                    key={city}
-                    onClick={() => handleCitySelect(city)}
-                  >
-                    {city}
-                  </li>
-                ))}
-              </ul>
+          <Button
+            variant="contained"
+            className={classes.submit}
+            startIcon={!load ? <SearchIcon /> : ""}
+            type="submit"
+          >
+            {!load ? (
+              "Search"
+            ) : (
+              <>
+                Seaching.. <CircularProgress size={22} color="inherit" />
+              </>
             )}
-          </div>
-          <div className={classes.div}>
-            <label>To</label>
-            <input
-              type="text"
-              placeholder="To"
-              value={searchTerm2}
-              onChange={handleInputChange2}
-              required
-            />
-            {searchTerm2.length > 0 && (
-              <ul className={classes.ul}>
-                {filteredCities2.map((city) => (
-                  <li
-                    className={classes.li}
-                    key={city}
-                    onClick={() => handleCitySelect2(city)}
-                  >
-                    {city}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-          <div className={classes.div}>
-            <label>Date of Journey</label>
-            <input type="date" required />
-          </div>
-          <center>
-            <Button type="submit">Search</Button>
-          </center> */}
+          </Button>
         </form>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import classes from "./Bus.module.css";
 import Ticket from "./Ticket";
+import { Button } from "@mui/material";
 const Bus = (props) => {
   const [SeletedBus, setSelectedBus] = useState([]);
   console.log(props.values);
@@ -102,12 +103,15 @@ const Bus = (props) => {
                   ))}
                 </div>
                 <div>
-                  <button
+                  <Button
+                    variant="contained"
+                    color="success"
+                    size="large"
                     className={classes.btn}
                     onClick={() => ViewTicket(item)}
                   >
                     View
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>
