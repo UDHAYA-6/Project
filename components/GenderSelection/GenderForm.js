@@ -2,95 +2,96 @@ import React, { useState } from "react";
 import classes from "./Gender.module.css";
 import { Autocomplete } from "@mui/material";
 import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 const GenderForm = (props) => {
-  const [MaleCount, setMaleCount] = useState(null);
-  const [FemaleCount, setFemaleCount] = useState(null);
   const [Disable, setDisable] = useState(true);
   const [Description, SetDescription] = useState(false);
   const GenderSelected = (event) => {
     event.preventDefault();
     SetDescription(true);
     props.Show(true);
-    props.male(Number(MaleCount));
-    props.female(Number(FemaleCount));
-  };
-  const MaleChange = (event) => {
-    setMaleCount(event.target.value);
-    SetDescription(false);
-    updateDisableState(event.target.value, FemaleCount);
+    props.male(Number(male));
+    props.female(Number(female));
   };
 
-  const FemaleChange = (event) => {
-    setFemaleCount(event.target.value);
+  const updateDisableState = (male, female) => {
+    const total = parseInt(male) + parseInt(female);
+    if (total <= 5 && total > 0) {
+      setDisable(false);
+    } else {
+      setDisable(true);
+    }
+  };
+  const [male, setMale] = useState("");
+  const [female, setFemale] = useState("");
+  const handleChange1 = (event) => {
+    setMale(event.target.value);
     SetDescription(false);
-    updateDisableState(MaleCount, event.target.value);
+    updateDisableState(event.target.value, female);
   };
-  const updateDisableState = (maleCount, femaleCount) => {
-    const total = parseInt(maleCount) + parseInt(femaleCount);
-    setDisable(total <= 0 || total > 5);
+  const handleChange2 = (event) => {
+    setFemale(event.target.value);
+    SetDescription(false);
+    updateDisableState(event.target.value, male);
   };
-  const top100Films = [0, 1, 2, 3, 4, 5];
   return (
     <div className={classes.div}>
       <form onSubmit={GenderSelected} className={classes.form}>
-        <span>Select No of seats:</span>
+        <Box>
+          <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+            <InputLabel id="demo-simple-select-label">Male</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={male}
+              onChange={handleChange1}
+            >
+              <MenuItem value={0}>0</MenuItem>
+              <MenuItem value={1}>1</MenuItem>
+              <MenuItem value={2}>2</MenuItem>
+              <MenuItem value={3}>3</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
 
-        <div>
-          <Autocomplete
-            disablePortal
-            options={top100Films}
-            sx={{
-              width: "80px",
-              "& .MuiOutlinedInput-root": { fontSize: "0.3rem" },
-            }}
-            value={MaleCount}
-            onChange={MaleChange}
-            getOptionLabel={(option) => option}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Male"
-                required
-                InputLabelProps={{ sx: { fontSize: "0.8rem" } }}
-              />
-            )}
-          />
-        </div>
+        <Box sx={{ minWidth: 120 }}>
+          <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+            <InputLabel id="demo-simple-select-label1">Female</InputLabel>
+            <Select
+              labelId="demo-simple-select-label1"
+              id="demo-simple-select1"
+              value={female}
+              onChange={handleChange2}
+            >
+              <MenuItem value={0}>0</MenuItem>
+              <MenuItem value={1}>1</MenuItem>
+              <MenuItem value={2}>2</MenuItem>
+              <MenuItem value={3}>3</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
 
-        <div>
-          <Autocomplete
-            className={classes.Autocomplete}
-            disablePortal
-            options={top100Films}
-            sx={{
-              width: "80px",
-              "& .MuiOutlinedInput-root": { fontSize: "0.3rem" },
-            }}
-            value={FemaleCount}
-            onChange={FemaleChange}
-            getOptionLabel={(option) => option}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Female"
-                required
-                InputLabelProps={{ sx: { fontSize: "0.8rem" } }}
-              />
-            )}
-          />
-        </div>
-        <div>
-          <Button variant="contained" disabled={Disable} type="submit">
+        <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+          <Button
+            disabled={Disable}
+            variant="contained"
+            size="medium"
+            type="submit"
+          >
             Continue
           </Button>
-        </div>
+        </FormControl>
       </form>
       <div>
         {Description && (
           <center>
-            You can book total of {Number(MaleCount) + Number(FemaleCount)}
+            You can book total of {Number(male) + Number(female)}
             seats
           </center>
         )}

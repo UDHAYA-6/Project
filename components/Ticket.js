@@ -4,6 +4,13 @@ import Legand from "./Legand/Legand";
 import GenderForm from "./GenderSelection/GenderForm";
 import { useRouter } from "next/router";
 import { getSession, useSession } from "next-auth/react";
+import {
+  FormControl,
+  TextField,
+  InputLabel,
+  Select,
+  MenuItem,
+} from "@mui/material";
 
 const Ticket = (props) => {
   const router = useRouter();
@@ -265,7 +272,7 @@ const Ticket = (props) => {
           {!Show && (
             <div className={classes.helper}>
               Please select the total number of male and female seats to
-              continue booking 1
+              continue booking
             </div>
           )}
           {PickedSeats.length > 0 && (
@@ -277,43 +284,56 @@ const Ticket = (props) => {
                 >
                   <span>{index + 1}</span>
                   <span>Seat no: {item}</span>
-                  <input
-                    type="text"
-                    placeholder="Name"
-                    value={formData[index]?.name || ""}
-                    onChange={(e) =>
-                      handleInputChange(index, "name", e.target.value)
-                    }
-                    required
-                  />
-                  <input
-                    type="number"
-                    placeholder="Age"
-                    value={formData[index]?.age || ""}
-                    onChange={(e) =>
-                      handleInputChange(index, "age", e.target.value)
-                    }
-                    required
-                  />
-                  <select
-                    value={formData[index]?.gender || ""}
-                    onChange={(e) =>
-                      handleInputChange(index, "gender", e.target.value)
-                    }
-                    required
-                  >
-                    <option value="" disabled>
-                      Select Gender
-                    </option>
-                    {fem.includes(item) ? (
-                      <option value="Female">female</option>
-                    ) : (
-                      <>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                      </>
-                    )}
-                  </select>
+
+                  <FormControl sx={{ maxWidth: 150 }} size="small">
+                    <TextField
+                      id="outlined-basic"
+                      label="Name"
+                      variant="outlined"
+                      size="small"
+                      value={formData[index]?.name || ""}
+                      required
+                      onChange={(e) =>
+                        handleInputChange(index, "name", e.target.value)
+                      }
+                    />
+                  </FormControl>
+                  <FormControl sx={{ maxWidth: 150 }} size="small">
+                    <TextField
+                      id="outlined-basic1"
+                      label="Age"
+                      variant="outlined"
+                      size="small"
+                      value={formData[index]?.age || ""}
+                      required
+                      onChange={(e) =>
+                        handleInputChange(index, "age", e.target.value)
+                      }
+                    />
+                  </FormControl>
+                  <FormControl sx={{ maxWidth: 200 }} size="small">
+                    <InputLabel id="demo-simple-select-label1">
+                      Gender
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label1"
+                      id="demo-simple-select1"
+                      value={formData[index]?.gender || ""}
+                      onChange={(e) =>
+                        handleInputChange(index, "gender", e.target.value)
+                      }
+                      required
+                    >
+                      {fem.includes(item) ? (
+                        <MenuItem value={"Female"}>Female</MenuItem>
+                      ) : (
+                        <>
+                          <MenuItem value={"Male"}>Male</MenuItem>
+                          <MenuItem value={"Female"}>Female</MenuItem>
+                        </>
+                      )}
+                    </Select>
+                  </FormControl>
                 </div>
               ))}
               <button type="submit">Pay</button>

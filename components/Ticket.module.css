@@ -106,13 +106,16 @@
 }
 
 .helper {
-  font-size: 2rem;
-  display: grid;
-  height: 100%;
+  font-size: 1.3rem;
+  top: 50%;
+  margin-left: 200px;
+  position: absolute;
   width: 300px;
-  place-items: center;
-  opacity: 0.9;
   text-align: justify;
+  background-color: rgb(9, 96, 172);
+  color: rgb(228, 217, 217);
+  padding: 0.5rem;
+  border-radius: 5px;
 }
 .select {
   background-color: rgb(18, 162, 18);
