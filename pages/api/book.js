@@ -94,7 +94,7 @@ export default async function handler(req, res) {
                 age,
                 gender,
               },
-              [`Seats.${category}.$[seat].seatStatus`]: "Booked", // Add this line to update seat status
+              [`Seats.${category}.$[seat].seatStatus`]: "Booked",
             },
           },
           { arrayFilters: [{ "seat.seat_num": seatNumber }] }

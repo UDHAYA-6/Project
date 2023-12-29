@@ -132,4 +132,9 @@
 }
 .form {
   margin-top: 100px;
+  margin-left: 150px;
+}
+
+.field {
+  margin-bottom: 10px;
 }

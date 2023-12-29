@@ -12,6 +12,13 @@
   width: 15px;
   height: 15px;
 }
+
+.avl,
+.booked,
+.female,
+.Reserved {
+  border-radius: 4px;
+}
 .avl {
   background-color: lightgray;
   border: 1px solid black;

@@ -7,9 +7,11 @@ import { getSession, useSession } from "next-auth/react";
 import {
   FormControl,
   TextField,
+  Autocomplete,
   InputLabel,
   Select,
   MenuItem,
+  Button,
 } from "@mui/material";
 
 const Ticket = (props) => {
@@ -67,9 +69,13 @@ const Ticket = (props) => {
   };
   const Male = (count) => {
     setMaleCount(count);
+    setPickedSeats([]);
+    SetFem([]);
   };
   const Female = (count) => {
     setFemaleCount(count);
+    setPickedSeats([]);
+    SetFem([]);
   };
   const handleInputChange = (index, fieldName, value) => {
     const updatedData = [...formData];
@@ -138,7 +144,23 @@ const Ticket = (props) => {
       window.open("/login", "_blank");
     }
   };
-
+  const styles = {
+    "& .MuiInputLabel-root": {
+      color: "blue",
+    },
+    "& .MuiInputBase-input": {
+      color: "blue",
+    },
+    "& .MuiOutlinedInput-root": {
+      borderColor: "blue",
+    },
+    "& .MuiOutlinedInput-notchedOutline": {
+      borderColor: "blue",
+    },
+    "&:hover .MuiOutlinedInput-notchedOutline": {
+      borderColor: "blue",
+    },
+  };
   return (
     <div className={classes.div}>
       <div className={classes.div1}>
@@ -282,12 +304,24 @@ const Ticket = (props) => {
                   key={index}
                   style={{ display: "flex", flexDirection: "row" }}
                 >
-                  <span>{index + 1}</span>
-                  <span>Seat no: {item}</span>
-
-                  <FormControl sx={{ maxWidth: 150 }} size="small">
+                  <FormControl className={classes.field} sx={{ maxWidth: 100 }}>
                     <TextField
-                      id="outlined-basic"
+                      sx={styles}
+                      label="Seat no"
+                      size="small"
+                      value={item}
+                      InputProps={{
+                        readOnly: true,
+                      }}
+                    />
+                  </FormControl>
+                  <FormControl
+                    sx={{ maxWidth: 150 }}
+                    size="small"
+                    className={classes.field}
+                  >
+                    <TextField
+                      sx={styles}
                       label="Name"
                       variant="outlined"
                       size="small"
@@ -298,9 +332,13 @@ const Ticket = (props) => {
                       }
                     />
                   </FormControl>
-                  <FormControl sx={{ maxWidth: 150 }} size="small">
+                  <FormControl
+                    sx={{ maxWidth: 150 }}
+                    size="small"
+                    className={classes.field}
+                  >
                     <TextField
-                      id="outlined-basic1"
+                      sx={styles}
                       label="Age"
                       variant="outlined"
                       size="small"
@@ -311,13 +349,15 @@ const Ticket = (props) => {
                       }
                     />
                   </FormControl>
-                  <FormControl sx={{ maxWidth: 200 }} size="small">
-                    <InputLabel id="demo-simple-select-label1">
-                      Gender
-                    </InputLabel>
+
+                  <FormControl
+                    className={classes.field}
+                    sx={{ minWidth: 150 }}
+                    size="small"
+                  >
+                    <InputLabel>Gender</InputLabel>
                     <Select
-                      labelId="demo-simple-select-label1"
-                      id="demo-simple-select1"
+                      sx={styles}
                       value={formData[index]?.gender || ""}
                       onChange={(e) =>
                         handleInputChange(index, "gender", e.target.value)
@@ -327,16 +367,28 @@ const Ticket = (props) => {
                       {fem.includes(item) ? (
                         <MenuItem value={"Female"}>Female</MenuItem>
                       ) : (
-                        <>
+                        (FemaleCount == 0 && (
                           <MenuItem value={"Male"}>Male</MenuItem>
+                        )) ||
+                        (MaleCount == 0 && (
                           <MenuItem value={"Female"}>Female</MenuItem>
-                        </>
+                        )) || [
+                          <MenuItem value={"Male"}>Male</MenuItem>,
+                          <MenuItem value={"Female"}>Female</MenuItem>,
+                        ]
                       )}
                     </Select>
                   </FormControl>
                 </div>
               ))}
-              <button type="submit">Pay</button>
+              <Button
+                type="submit"
+                variant="contained"
+                color="success"
+                size="medium"
+              >
+                Book
+              </Button>
             </form>
           )}
         </div>
