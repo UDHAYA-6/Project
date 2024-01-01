@@ -4,11 +4,9 @@ import Ticket from "./Ticket";
 import { Button } from "@mui/material";
 const Bus = (props) => {
   const [SeletedBus, setSelectedBus] = useState([]);
-  console.log(props.values);
   const [TicketWindow, setTicketWindow] = useState(false);
   const ViewTicket = (item) => {
     setSelectedBus(item);
-    console.log("selected item:", item);
     setTicketWindow(!TicketWindow);
   };
   return (

@@ -13,6 +13,7 @@ import {
   MenuItem,
   Button,
 } from "@mui/material";
+import CustomizedSnackbars from "./Snackbar/Alert";
 
 const Ticket = (props) => {
   const router = useRouter();
@@ -24,7 +25,6 @@ const Ticket = (props) => {
   const [FemaleCount, setFemaleCount] = useState(0);
   const [fem, SetFem] = useState([]);
   const data = props.Data;
-  // console.log(data);
   const womenLowerSeater = data.Seats.Lower.Seater;
   const LowerSeater = womenLowerSeater
     .filter((item) => {
@@ -43,7 +43,6 @@ const Ticket = (props) => {
     });
 
   const womenUpperRightDeck = data.Seats.Upper.Right;
-  console.log(womenUpperRightDeck);
   const UpperRight = womenUpperRightDeck
     .filter((item) => {
       return (
@@ -59,10 +58,7 @@ const Ticket = (props) => {
       const K = Number(numberPart);
       return `${prefix}${K <= 5 ? K + 5 : K - 5}`;
     });
-  console.log(UpperRight);
   const ReservedWomenSeats = [...LowerSeater, ...UpperRight];
-
-  console.log("Reserved Women Seats:", ReservedWomenSeats);
 
   const GetShow = (value) => {
     setShow(value);
@@ -88,8 +84,6 @@ const Ticket = (props) => {
   };
 
   const total = MaleCount + FemaleCount;
-
-  console.log("Picked seats", PickedSeats);
 
   const SelectedSeats = (num) => {
     const isSelected = PickedSeats.includes(num);
@@ -130,16 +124,22 @@ const Ticket = (props) => {
     }));
     const userSession = await getSession();
     if (userSession) {
-      console.log("FormData:", { data: newFormData });
       const response = await fetch("api/book", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ Get: newFormData, id: props.Data._id }),
       });
       const jsonData = await response.json();
-      alert(jsonData.msg);
+      <CustomizedSnackbars
+        type={"success"}
+        message={"Your tickets are booked"}
+      />;
       router.push("/");
     } else {
+      <CustomizedSnackbars
+        type={"info"}
+        message={"Please login to continue booking"}
+      />;
       alert("Login to continue booking");
       window.open("/login", "_blank");
     }

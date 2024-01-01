@@ -21,14 +21,18 @@
 .div2 {
   width: 50%;
   height: 100vh;
-  background-image: url("/form3.png");
+  background-image: url("/bg.png");
+
   background-size: cover;
 }
 
 .form {
-  border: 2px solid black;
+  border: 1px solid rgb(69, 69, 69);
+  background-color: rgb(202, 211, 219);
+  border-radius: 8px;
   width: fit-content;
   height: fit-content;
+  color: white;
   top: 50%;
   position: absolute;
   left: 25%;

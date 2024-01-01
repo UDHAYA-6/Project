@@ -1,5 +1,6 @@
 import { MongoClient } from "mongodb";
-const uri = process.env.MONGODB_URI;
+const uri =
+  "mongodb+srv://user1:user1idp@cluster0.8qbnl0l.mongodb.net/?retryWrites=true&w=majority";
 let CachedClient = null;
 async function ConnectToDatabase() {
   if (CachedClient) return CachedClient;

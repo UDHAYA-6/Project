@@ -8,6 +8,7 @@ import { Button } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
 import CircularProgress from "@mui/material/CircularProgress";
+import CustomizedSnackbars from "./Snackbar/Alert";
 
 const BusSearch = (props) => {
   const [searchTerm, setSearchTerm] = useState(null);
@@ -25,17 +26,16 @@ const BusSearch = (props) => {
   const formSubmit = async (event) => {
     event.preventDefault();
     setLoad(true);
-    console.log({ searchTerm, searchTerm2 });
     const response = await fetch(
       `/api/fetch?from=${searchTerm}&to=${searchTerm2}`
     );
     const jsonData = await response.json();
     if (response.status === 200) {
       setLoad(false);
-      console.log(jsonData);
       props.getData(jsonData);
     } else {
-      console.log(jsonData.msg);
+      <CustomizedSnackbars type={"error"} message={jsonData.msg} />;
+
       setLoad(false);
     }
   };
@@ -78,7 +78,6 @@ const BusSearch = (props) => {
           <Title />
         </div>
       </div>
-
       <div className={classes.right}>
         <form className={classes.form} onSubmit={formSubmit}>
           <Autocomplete
@@ -139,6 +138,7 @@ const BusSearch = (props) => {
           </Button>
         </form>
       </div>
+      <CustomizedSnackbars type={"success"} message={"succesfully logged in"} />
     </div>
   );
 };

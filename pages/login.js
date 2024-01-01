@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
+import CustomizedSnackbars from "@/components/Snackbar/Alert";
 import styles from "../styles/login.module.css";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
@@ -10,12 +11,28 @@ import {
   Button,
   FormControl,
   IconButton,
-  Input,
-  InputLabel,
   ToggleButton,
   ToggleButtonGroup,
   Stack,
 } from "@mui/material";
+
+const style = {
+  "& .MuiInputLabel-root": {
+    color: "white",
+  },
+  "& .MuiInputBase-input": {
+    color: "white",
+  },
+  "& .MuiOutlinedInput-root": {
+    borderColor: "white",
+  },
+  "& .MuiOutlinedInput-notchedOutline": {
+    borderColor: "white",
+  },
+  "&:hover .MuiOutlinedInput-notchedOutline": {
+    borderColor: "white",
+  },
+};
 
 const Login = () => {
   const router = useRouter();
@@ -100,29 +117,44 @@ const Login = () => {
           redirect: false,
         });
         if (response.error) {
-          console.log("error", response);
-          alert("Invalid credentials");
+          <CustomizedSnackbars
+            type="error"
+            message={"error while signing in"}
+          />;
         } else {
-          console.log("correct");
-          console.log(response);
+          <CustomizedSnackbars
+            type={"success"}
+            message={"Successfully logged in"}
+          />;
+
           window.close();
         }
       } catch (error) {
-        alert("Check your internet connection");
+        alert(error);
       }
     } else {
       const response = await fetch("api/reg", {
+        body: JSON.stringify({ Email, Pass, Name }),
         method: "POST",
-        body: JSON.stringify({ Name, Email, Pass }),
-        headers: { "Content-Type": "application/json" },
+        headers: { "content-Type": "application/json" },
       });
       const jsonData = await response.json();
-      console.log(jsonData.msg);
       if (response.status === 200) {
-        router.push("/page");
+        const response1 = await signIn("credentials", {
+          Email,
+          Pass,
+          redirect: false,
+        });
+
+        if (!response1.error) {
+          <CustomizedSnackbars
+            type={"success"}
+            message={"Successfully registered"}
+          />;
+          window.close();
+        }
       } else {
-        alert(jsonData.msg);
-        console.log(jsonData.msg);
+        <CustomizedSnackbars type={"error"} message={jsonData.msg} />;
       }
     }
   };
@@ -139,16 +171,25 @@ const Login = () => {
           <Stack direction="row">
             <ToggleButtonGroup
               value={Login}
-              color="success"
               exclusive
               onChange={handleAlignment}
               aria-label="text alignment"
-              size="large"
+              size="small"
             >
-              <ToggleButton value="login" color="primary">
+              <ToggleButton
+                value="login"
+                sx={{ minWidth: 150 }}
+                color="success"
+              >
                 Login
               </ToggleButton>
-              <ToggleButton value="signin">SignIn</ToggleButton>
+              <ToggleButton
+                value="signin"
+                sx={{ minWidth: 150 }}
+                color="secondary"
+              >
+                SignIn
+              </ToggleButton>
             </ToggleButtonGroup>
           </Stack>
           <div className={styles.inputFeilds}>
@@ -224,7 +265,7 @@ const Login = () => {
               </FormControl>
             )}
 
-            <Button variant="contained">
+            <Button variant="contained" type="submit">
               {Login == "login" ? "Log In" : "Create account"}
             </Button>
           </div>

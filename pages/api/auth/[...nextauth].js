@@ -21,7 +21,7 @@ export default NextAuth({
           Password: credentials.Pass,
         });
         if (user) {
-          return Promise.resolve({ Email: user.Email });
+          return Promise.resolve(user);
         } else {
           return Promise.resolve(null);
         }
@@ -32,6 +32,7 @@ export default NextAuth({
   callbacks: {
     async session(session) {
       session.id = "3704890#4890";
+      session.Email = user.Email;
       return session;
     },
   },
