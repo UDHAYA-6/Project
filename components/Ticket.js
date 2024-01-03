@@ -2,18 +2,19 @@ import React, { useState } from "react";
 import classes from "./Ticket.module.css";
 import Legand from "./Legand/Legand";
 import GenderForm from "./GenderSelection/GenderForm";
+import { TicketStyle as styles } from "./Helper Functions/Functions";
 import { useRouter } from "next/router";
 import { getSession, useSession } from "next-auth/react";
 import {
   FormControl,
   TextField,
-  Autocomplete,
   InputLabel,
   Select,
   MenuItem,
   Button,
 } from "@mui/material";
 import CustomizedSnackbars from "./Snackbar/Alert";
+import { Lowerseater, Upperright } from "./Helper Functions/Functions";
 
 const Ticket = (props) => {
   const router = useRouter();
@@ -25,39 +26,9 @@ const Ticket = (props) => {
   const [FemaleCount, setFemaleCount] = useState(0);
   const [fem, SetFem] = useState([]);
   const data = props.Data;
-  const womenLowerSeater = data.Seats.Lower.Seater;
-  const LowerSeater = womenLowerSeater
-    .filter((item) => {
-      return (
-        item.seatStatus === "Booked" &&
-        item.passengerDetails &&
-        item.passengerDetails.gender === "Female"
-      );
-    })
-    .map((femaleSeat) => {
-      const seatNumber = femaleSeat.seat_num;
-      const prefix = seatNumber.substring(0, 2);
-      const numberPart = seatNumber.substring(2);
-      const K = Number(numberPart);
-      return `${prefix}${K <= 9 ? K + 9 : K - 9}`;
-    });
 
-  const womenUpperRightDeck = data.Seats.Upper.Right;
-  const UpperRight = womenUpperRightDeck
-    .filter((item) => {
-      return (
-        item.seatStatus === "Booked" &&
-        item.passengerDetails &&
-        item.passengerDetails.gender == "Female"
-      );
-    })
-    .map((femaleSeat) => {
-      const seatNumber = femaleSeat.seat_num;
-      const prefix = seatNumber.substring(0, 2);
-      const numberPart = seatNumber.substring(2);
-      const K = Number(numberPart);
-      return `${prefix}${K <= 5 ? K + 5 : K - 5}`;
-    });
+  const LowerSeater = Lowerseater(data.Seats.Lower.Seater);
+  const UpperRight = Upperright(data.Seats.Upper.Right);
   const ReservedWomenSeats = [...LowerSeater, ...UpperRight];
 
   const GetShow = (value) => {
@@ -144,23 +115,7 @@ const Ticket = (props) => {
       window.open("/login", "_blank");
     }
   };
-  const styles = {
-    "& .MuiInputLabel-root": {
-      color: "blue",
-    },
-    "& .MuiInputBase-input": {
-      color: "blue",
-    },
-    "& .MuiOutlinedInput-root": {
-      borderColor: "blue",
-    },
-    "& .MuiOutlinedInput-notchedOutline": {
-      borderColor: "blue",
-    },
-    "&:hover .MuiOutlinedInput-notchedOutline": {
-      borderColor: "blue",
-    },
-  };
+
   return (
     <div className={classes.div}>
       <div className={classes.div1}>

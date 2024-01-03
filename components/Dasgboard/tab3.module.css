@@ -1,0 +1,15 @@
+.form {
+  display: flex;
+  flex-direction: row;
+  margin-left: 10rem;
+  width: 100%;
+  height: fit-content;
+}
+.div1,
+.div2 {
+  width: 50%;
+  height: 400px;
+}
+.field {
+  margin: 1rem;
+}

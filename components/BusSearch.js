@@ -9,6 +9,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
 import CircularProgress from "@mui/material/CircularProgress";
 import CustomizedSnackbars from "./Snackbar/Alert";
+import { styles } from "./Helper Functions/Functions";
 
 const BusSearch = (props) => {
   const [searchTerm, setSearchTerm] = useState(null);
@@ -44,24 +45,7 @@ const BusSearch = (props) => {
     setSearchTerm(searchTerm2);
     setSearchTerm2(newVar);
   };
-  const styles = {
-    width: 300,
-    "& .MuiInputLabel-root": {
-      color: "white",
-    },
-    "& .MuiInputBase-input": {
-      color: "white",
-    },
-    "& .MuiOutlinedInput-root": {
-      borderColor: "white",
-    },
-    "& .MuiOutlinedInput-notchedOutline": {
-      borderColor: "white",
-    },
-    "&:hover .MuiOutlinedInput-notchedOutline": {
-      borderColor: "white",
-    },
-  };
+
   return (
     <div className={classes.container}>
       <div className={classes.left}>
@@ -138,7 +122,6 @@ const BusSearch = (props) => {
           </Button>
         </form>
       </div>
-      <CustomizedSnackbars type={"success"} message={"succesfully logged in"} />
     </div>
   );
 };

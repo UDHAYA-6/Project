@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import classes from "./Gender.module.css";
-import { Autocomplete } from "@mui/material";
-import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import InputLabel from "@mui/material/InputLabel";
