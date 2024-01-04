@@ -10,12 +10,11 @@
 }
 
 .left .curve {
-  width: 650px;
-  height: 500px;
+  width: 550px;
+  height: 450px;
   border-bottom-right-radius: 100%;
   box-shadow: 5px 5px 20px rgb(47, 45, 45);
-  /* background-color: #fff7e9; */
-  /* background: linear-gradient(to left, #bcd3c7, #2c3e50); */
+
   background-color: #141528;
 }
 .textBox1 {

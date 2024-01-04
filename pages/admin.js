@@ -27,12 +27,7 @@ const admin = () => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  const EmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-  const PasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
+
   const FormSubmit = async (event) => {
     event.preventDefault();
 
@@ -76,7 +71,7 @@ const admin = () => {
             type="email"
             required
             value={Email}
-            onChange={EmailChange}
+            onChange={(event) => setEmail(event.target.value)}
           />
         </FormControl>
         <FormControl
@@ -91,7 +86,7 @@ const admin = () => {
             type={showPassword ? "text" : "password"}
             required
             value={Password}
-            onChange={PasswordChange}
+            onChange={(event) => setPassword(event.target.value)}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton

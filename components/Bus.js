@@ -2,13 +2,20 @@ import React, { useState } from "react";
 import classes from "./Bus.module.css";
 import Ticket from "./Ticket";
 import { Button } from "@mui/material";
+import Backdrop from "@mui/material/Backdrop";
+import MovingIcon from "@mui/icons-material/Moving";
+
 const Bus = (props) => {
   const [SeletedBus, setSelectedBus] = useState([]);
   const [TicketWindow, setTicketWindow] = useState(false);
+  const [open, setOpen] = useState(false);
+
   const ViewTicket = (item) => {
     setSelectedBus(item);
     setTicketWindow(!TicketWindow);
+    setOpen(!open);
   };
+
   return (
     <div>
       <center>
@@ -18,104 +25,99 @@ const Bus = (props) => {
         props.values.length > 0 &&
         props.values.map((item) => (
           <div className={classes.container} key={item._id}>
-            <div className={classes.top}>
-              <div>
-                <span className={classes.heading}>Source: </span>
-                <span>{item.Source}</span>
-              </div>
-              <div>{item.Bus_no}</div>
-              <div>
-                <span className={classes.heading}>Destination: </span>
-                <span>{item.Destination}</span>
-              </div>
-            </div>
-            <div className={classes.bottom}>
-              <div className={classes.div1}>
-                <div>
-                  <span>Departure Time: </span>
-                  <span style={{ fontWeight: "bolder" }}>08:50 AM</span>
-                </div>
-                <div>
-                  <span style={{ fontWeight: "bold" }}>
-                    Tiruchendure Express
-                  </span>
-                </div>
-                <div>
-                  <span>Arrival Time:</span>
-                  <span style={{ fontWeight: "bold" }}>10:55 PM</span>
+            {/* <div>
+              <img
+                height={150}
+                width={150}
+                style={{ borderTopLeftRadius: "100px" }}
+                src="https://img.freepik.com/free-vector/city-bus-stop-flat-poster_1284-8899.jpg?w=740&t=st=1704362261~exp=1704362861~hmac=4f0fd51d7da3f08403a875702626baba0822c30005c72ef2213d553311dd37dc"
+              />
+            </div> */}
+            <div>
+              <div className={classes.top}>
+                <div style={{ margin: "0px 15px" }}> Tiruchendure Express</div>
+                <div style={{ margin: "0px 15px" }}>
+                  <span>{item.Source} </span> <MovingIcon />
+                  <span> {item.Destination}</span>
                 </div>
               </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  flexWrap: "wrap",
-                  alignItems: "center",
-                }}
-              >
+              <div className={classes.bottom}>
+                <div className={classes.div1} style={{ margin: "0px 15px" }}>
+                  <div>
+                    <span>Departure Time: </span>
+                    <span style={{ fontWeight: "bolder" }}>08:50</span>
+                  </div>
+
+                  <div>
+                    <span>Arrival Time:</span>
+                    <span style={{ fontWeight: "bold" }}>10:55</span>
+                  </div>
+                </div>
                 <div
                   style={{
                     display: "flex",
                     flexDirection: "row",
-                    fontSize: "1.4rem",
-                    justifyContent: "space-between",
-                    fontWeight: "bold",
-                    color: "#141538",
-                    width: "70%",
-                  }}
-                >
-                  <div>
-                    <span style={{ color: "black" }}>Duration:</span>
-                    <span> 8hrs 40min</span>
-                  </div>
-                  <div>
-                    <span style={{ color: "black" }}>Total seats: </span>
-                    <span>{item.Total}</span>
-                  </div>
-                  <div>
-                    <span style={{ color: "black" }}>AVL: </span>
-                    <span style={{ color: "green" }}>28</span>
-                  </div>
-                </div>
-                <div
-                  style={{
-                    display: "flex",
                     flexWrap: "wrap",
-                    width: "70%",
-                    padding: "1rem",
+                    alignItems: "center",
                   }}
                 >
-                  <span
+                  <div
                     style={{
-                      fontSize: "1.3rem",
-                      fontWeight: "bold",
-                      color: "#141338",
+                      display: "flex",
+                      flexDirection: "row",
+                      fontSize: "1.4rem",
+                      justifyContent: "space-between",
+                      color: "#141538",
+                      width: "70%",
+                    }}
+                  ></div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      width: "70%",
+                      padding: "1rem",
                     }}
                   >
-                    Via:
-                  </span>
-                  {item.Via.map((via) => (
-                    <span style={{ fontSize: "1.2rem" }} key={via}>
-                      {via}-
+                    <span
+                      style={{
+                        fontSize: "1.3rem",
+                        fontWeight: "bold",
+                        color: "lightgreen",
+                      }}
+                    >
+                      Via:
                     </span>
-                  ))}
-                </div>
-                <div>
-                  <Button
-                    variant="contained"
-                    color="success"
-                    size="large"
-                    className={classes.btn}
-                    onClick={() => ViewTicket(item)}
-                  >
-                    View
-                  </Button>
+                    {item.Via.map((via) => (
+                      <span style={{ fontSize: "1.2rem" }} key={via}>
+                        {via}-
+                      </span>
+                    ))}
+                  </div>
+                  <div>
+                    <Button
+                      variant="contained"
+                      color="success"
+                      size="large"
+                      className={classes.btn}
+                      onClick={() => ViewTicket(item)}
+                    >
+                      View
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         ))}
-      {TicketWindow && <Ticket close={ViewTicket} Data={SeletedBus} />}
+      {TicketWindow && (
+        <Backdrop
+          sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+        >
+          <Ticket close={ViewTicket} Data={SeletedBus} />
+        </Backdrop>
+      )}
     </div>
   );
 };

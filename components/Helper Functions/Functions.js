@@ -1,4 +1,5 @@
 import Buses from "../../Data/Bus";
+
 const Bus = Buses;
 const UpdateBusStructure = (
   Bus_no,
@@ -51,25 +52,6 @@ const Category = (seatNumber) => {
   return category;
 };
 
-const styles = {
-  width: 300,
-  "& .MuiInputLabel-root": {
-    color: "white",
-  },
-  "& .MuiInputBase-input": {
-    color: "white",
-  },
-  "& .MuiOutlinedInput-root": {
-    borderColor: "white",
-  },
-  "& .MuiOutlinedInput-notchedOutline": {
-    borderColor: "white",
-  },
-  "&:hover .MuiOutlinedInput-notchedOutline": {
-    borderColor: "white",
-  },
-};
-
 const Lowerseater = (womenLowerSeater) => {
   return womenLowerSeater
     .filter((item) => {
@@ -106,6 +88,25 @@ const Upperright = (womenUpperRightDeck) => {
     });
 };
 
+const styles = {
+  width: 300,
+  "& .MuiInputLabel-root": {
+    color: "white",
+  },
+  "& .MuiInputBase-input": {
+    color: "white",
+  },
+  "& .MuiOutlinedInput-root": {
+    borderColor: "white",
+  },
+  "& .MuiOutlinedInput-notchedOutline": {
+    borderColor: "white",
+  },
+  "&:hover .MuiOutlinedInput-notchedOutline": {
+    borderColor: "white",
+  },
+};
+
 const TicketStyle = {
   "& .MuiInputLabel-root": {
     color: "blue",
@@ -123,9 +124,29 @@ const TicketStyle = {
     borderColor: "blue",
   },
 };
+
+const Loginstyle = {
+  "& .MuiInputLabel-root": {
+    color: "white",
+  },
+  "& .MuiInputBase-input": {
+    color: "white",
+  },
+  "& .MuiOutlinedInput-root": {
+    borderColor: "white",
+  },
+  "& .MuiOutlinedInput-notchedOutline": {
+    borderColor: "white",
+  },
+  "&:hover .MuiOutlinedInput-notchedOutline": {
+    borderColor: "white",
+  },
+};
+
+export { Loginstyle };
 export { TicketStyle };
+export { styles };
 export { Upperright };
 export { Lowerseater };
-export { styles };
 export { Category };
 export { UpdateBusStructure };

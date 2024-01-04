@@ -8,10 +8,6 @@ export default NextAuth({
   },
   providers: [
     CredentialsProvider({
-      //   credentials: {
-      //     email: { label: "Email", type: "text" },
-      //     password: { label: "password", type: "password" },
-      //   },
       authorize: async (credentials) => {
         const cl = await ConnectToDatabase();
         const client = await cl.connect();

@@ -1,23 +1,31 @@
 .container {
-  width: 60%;
-  background-color: lightgray;
+  width: 50%;
+  height: 150px;
+  background-color: #bbc9d4;
+  background-color: rgb(0, 0, 0);
+  color: lightgray;
   margin: 1.3rem auto;
-  border-radius: 10px;
-  padding: 1rem;
-  border-style: inset;
-  box-shadow: 4px 4px 7px rgb(54, 50, 50);
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+
+  display: flex;
 }
 .top {
   display: flex;
   flex-direction: row;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
   flex-wrap: wrap;
-  font-size: 1.7rem;
-  justify-content: space-around;
-  color: darkgreen;
-  border-bottom: 2px solid rgb(46, 44, 44);
+  font-size: 1.4rem;
+  justify-content: space-between;
+  color: rgb(214, 167, 81);
+  border-bottom: 2px solid rgb(0, 0, 0);
+  background-color: rgb(32, 31, 31);
 }
 .top .heading {
-  color: #111454;
+  color: #c2c5ff;
 }
 .bottom {
   display: flex;

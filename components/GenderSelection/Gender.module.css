@@ -1,10 +1,10 @@
 .div {
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   right: 190px;
-  top: 10px;
-  position: absolute;
+  top: 80px;
+  position: fixed; */
 }
 
 .div center {

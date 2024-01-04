@@ -43,13 +43,8 @@ const GenderForm = (props) => {
       <form onSubmit={GenderSelected} className={classes.form}>
         <Box>
           <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-            <InputLabel id="demo-simple-select-label">Male</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={male}
-              onChange={handleChange1}
-            >
+            <InputLabel>Male</InputLabel>
+            <Select value={male} onChange={handleChange1} label="Male">
               <MenuItem value={0}>0</MenuItem>
               <MenuItem value={1}>1</MenuItem>
               <MenuItem value={2}>2</MenuItem>
@@ -60,13 +55,8 @@ const GenderForm = (props) => {
 
         <Box sx={{ minWidth: 120 }}>
           <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-            <InputLabel id="demo-simple-select-label1">Female</InputLabel>
-            <Select
-              labelId="demo-simple-select-label1"
-              id="demo-simple-select1"
-              value={female}
-              onChange={handleChange2}
-            >
+            <InputLabel>Female</InputLabel>
+            <Select value={female} onChange={handleChange2} label="Female">
               <MenuItem value={0}>0</MenuItem>
               <MenuItem value={1}>1</MenuItem>
               <MenuItem value={2}>2</MenuItem>

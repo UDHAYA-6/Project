@@ -125,7 +125,6 @@ const Ticket = (props) => {
       </div>
       <div className={classes.div2}>
         <div className={classes.left}>
-          <GenderForm male={Male} female={Female} Show={GetShow} />
           <Legand />
           <center>Lower Deck</center>
           <div className={`${classes.UpperDeck} ${!Show ? classes.dis : " "}`}>
@@ -246,6 +245,7 @@ const Ticket = (props) => {
           </div>
         </div>
         <div className={classes.right}>
+          <GenderForm male={Male} female={Female} Show={GetShow} />
           {!Show && (
             <div className={classes.helper}>
               Please select the total number of male and female seats to
@@ -313,6 +313,7 @@ const Ticket = (props) => {
                     <InputLabel>Gender</InputLabel>
                     <Select
                       sx={styles}
+                      label="Gender"
                       value={formData[index]?.gender || ""}
                       onChange={(e) =>
                         handleInputChange(index, "gender", e.target.value)

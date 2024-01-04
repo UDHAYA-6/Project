@@ -16,24 +16,6 @@ import {
   Stack,
 } from "@mui/material";
 
-const style = {
-  "& .MuiInputLabel-root": {
-    color: "white",
-  },
-  "& .MuiInputBase-input": {
-    color: "white",
-  },
-  "& .MuiOutlinedInput-root": {
-    borderColor: "white",
-  },
-  "& .MuiOutlinedInput-notchedOutline": {
-    borderColor: "white",
-  },
-  "&:hover .MuiOutlinedInput-notchedOutline": {
-    borderColor: "white",
-  },
-};
-
 const Login = () => {
   const router = useRouter();
   const [Login, setLogin] = useState("login");

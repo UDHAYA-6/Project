@@ -1,42 +1,88 @@
-import React from "react";
-import classes from "./nav.module.css";
-import { FaBell, FaBus, FaSearch, FaUser } from "react-icons/fa";
-const NavBar = () => {
-  return (
-    <div>
-      <nav className={classes.nav}>
-        <div className={classes.leftNav}>
-          <div>
-            <span className={classes.span}>Newton </span>
-            <span className={classes.span}>Travels </span>
-            <FaBus color="lightblue" />
-          </div>
-        </div>
-        <ul className={classes.ul}>
-          <li>View Tickets</li>
-          <li>Refund Status</li>
-          <li>Cancel Tickets</li>
-          <li>Transaction Histroty</li>
-        </ul>
-        <div className={classes.rightNav}>
-          <FaSearch size={16} style={{ opacity: "0.8" }} />
-          <input className={classes.search} type="text" placeholder="search" />
-          <div className={classes.notification}>
-            <FaBell size={19} />
-          </div>
-          <div style={{ opacity: "0.8" }}>
-            <span>
-              <FaUser size={19} />
-            </span>
-            <span style={{ textTransform: "Capitalize", fontSize: "1.3rem" }}>
-              {" "}
-              Udhaya kumar
-            </span>
-          </div>
-        </div>
-      </nav>
-    </div>
-  );
-};
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import { styled, alpha } from "@mui/material/styles";
+import InputBase from "@mui/material/InputBase";
+import DirectionsBusSharpIcon from "@mui/icons-material/DirectionsBusSharp";
+import SearchIcon from "@mui/icons-material/Search";
+export default function ButtonAppBar() {
+  const Search = styled("div")(({ theme }) => ({
+    position: "relative",
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    "&:hover": {
+      backgroundColor: alpha(theme.palette.common.white, 0.25),
+    },
+    marginLeft: 0,
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: theme.spacing(1),
+      width: "auto",
+    },
+  }));
 
-export default NavBar;
+  const SearchIconWrapper = styled("div")(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: "100%",
+    position: "absolute",
+    pointerEvents: "none",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  }));
+
+  const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    color: "inherit",
+    width: "100%",
+    "& .MuiInputBase-input": {
+      padding: theme.spacing(1, 1, 1, 0),
+      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+      transition: theme.transitions.create("width"),
+      [theme.breakpoints.up("sm")]: {
+        width: "12ch",
+        "&:focus": {
+          width: "20ch",
+        },
+      },
+    },
+  }));
+  return (
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static" sx={{ backgroundColor: "#141528" }}>
+        <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
+          <Typography variant="h5" style={{ fontFamily: "Diphylleia" }}>
+            <DirectionsBusSharpIcon /> NewTon Travels
+          </Typography>
+          <Typography style={{ fontFamily: "Josefin Sans" }}>
+            View Tickets
+          </Typography>
+          <Typography style={{ fontFamily: "Josefin Sans" }}>
+            Booking Histroy
+          </Typography>
+          <Typography style={{ fontFamily: "Josefin Sans" }}>
+            Cancel Tickets
+          </Typography>
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ "aria-label": "search" }}
+            />
+          </Search>
+          <Button
+            variant="contained"
+            color="primary"
+            style={{ fontFamily: "Josefin Sans" }}
+          >
+            Login
+          </Button>
+        </Toolbar>
+      </AppBar>
+    </Box>
+  );
+}
