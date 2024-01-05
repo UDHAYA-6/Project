@@ -38,3 +38,12 @@
   font-size: 1.3rem;
   justify-content: space-between;
 }
+
+.header {
+  background-color: rgb(185, 124, 10);
+  border-radius: 10px;
+  color: black;
+  width: fit-content;
+  font-size: 1.5rem;
+  padding: 1rem;
+}

@@ -6,6 +6,7 @@ import styles from "../styles/login.module.css";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import Visibility from "@mui/icons-material/Visibility";
+import CircularProgress from "@mui/material/CircularProgress";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import {
   Button,
@@ -29,6 +30,7 @@ const Login = () => {
   const [EmailValid, setEmailValid] = useState(true);
   const [PassValid, setPassValid] = useState(true);
   const [ConfValid, setConfValid] = useState(true);
+  const [value, setvalue] = useState(false);
 
   const NameChange = (event) => {
     setName(event.target.value);
@@ -90,6 +92,7 @@ const Login = () => {
   };
 
   const formSubmit = async (event) => {
+    setvalue(true);
     event.preventDefault();
     if (Login == "login") {
       try {
@@ -99,16 +102,13 @@ const Login = () => {
           redirect: false,
         });
         if (response.error) {
-          <CustomizedSnackbars
-            type="error"
-            message={"error while signing in"}
-          />;
+          console.log(response);
+          alert("failed");
+          setvalue(false);
         } else {
-          <CustomizedSnackbars
-            type={"success"}
-            message={"Successfully logged in"}
-          />;
-
+          console.log(response);
+          alert("success");
+          setvalue(false);
           window.close();
         }
       } catch (error) {
@@ -133,10 +133,12 @@ const Login = () => {
             type={"success"}
             message={"Successfully registered"}
           />;
+          setvalue(false);
           window.close();
         }
       } else {
         <CustomizedSnackbars type={"error"} message={jsonData.msg} />;
+        setvalue(false);
       }
     }
   };
@@ -248,7 +250,11 @@ const Login = () => {
             )}
 
             <Button variant="contained" type="submit">
-              {Login == "login" ? "Log In" : "Create account"}
+              {`${!value && Login == "login" ? "Log In" : " "}   ${
+                value && Login == "login" ? "Logging.." : " "
+              } ${!value && Login != "login" ? "Create account" : " "}   ${
+                value && Login != "login" ? "Creating.." : " "
+              }`}
             </Button>
           </div>
         </form>

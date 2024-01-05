@@ -5,6 +5,7 @@ export default NextAuth({
   secret: process.env.AUTH_SECRET,
   session: {
     strategy: "jwt",
+    jwt: true,
   },
   providers: [
     CredentialsProvider({
@@ -17,7 +18,7 @@ export default NextAuth({
           Password: credentials.Pass,
         });
         if (user) {
-          return Promise.resolve(user);
+          return { email: credentials.Email, name: user.Name };
         } else {
           return Promise.resolve(null);
         }
@@ -27,8 +28,7 @@ export default NextAuth({
 
   callbacks: {
     async session(session) {
-      session.id = "3704890#4890";
-      session.Email = user.Email;
+      console.log(session);
       return session;
     },
   },

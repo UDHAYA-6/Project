@@ -15,28 +15,22 @@ const Bus = (props) => {
     setTicketWindow(!TicketWindow);
     setOpen(!open);
   };
-
+  console.log(props.values);
   return (
     <div>
       <center>
-        <h1>Total number of search results: {props.values.length}</h1>
+        <p className={classes.header}>
+          Total number of search results: {props.values.length}
+        </p>
       </center>
       {props.values &&
         props.values.length > 0 &&
         props.values.map((item) => (
           <div className={classes.container} key={item._id}>
-            {/* <div>
-              <img
-                height={150}
-                width={150}
-                style={{ borderTopLeftRadius: "100px" }}
-                src="https://img.freepik.com/free-vector/city-bus-stop-flat-poster_1284-8899.jpg?w=740&t=st=1704362261~exp=1704362861~hmac=4f0fd51d7da3f08403a875702626baba0822c30005c72ef2213d553311dd37dc"
-              />
-            </div> */}
             <div>
               <div className={classes.top}>
-                <div style={{ margin: "0px 15px" }}> Tiruchendure Express</div>
-                <div style={{ margin: "0px 15px" }}>
+                <div style={{ margin: "7px 15px" }}> {item.BusName}</div>
+                <div style={{ margin: "7px 15px" }}>
                   <span>{item.Source} </span> <MovingIcon />
                   <span> {item.Destination}</span>
                 </div>
@@ -45,12 +39,14 @@ const Bus = (props) => {
                 <div className={classes.div1} style={{ margin: "0px 15px" }}>
                   <div>
                     <span>Departure Time: </span>
-                    <span style={{ fontWeight: "bolder" }}>08:50</span>
+                    <span style={{ fontWeight: "bolder" }}>
+                      {item.Departure}
+                    </span>
                   </div>
 
                   <div>
                     <span>Arrival Time:</span>
-                    <span style={{ fontWeight: "bold" }}>10:55</span>
+                    <span style={{ fontWeight: "bold" }}>{item.Arrival}</span>
                   </div>
                 </div>
                 <div

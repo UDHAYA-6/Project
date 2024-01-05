@@ -8,7 +8,10 @@ import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import DirectionsBusSharpIcon from "@mui/icons-material/DirectionsBusSharp";
 import SearchIcon from "@mui/icons-material/Search";
+import { getSession, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 export default function ButtonAppBar() {
+  const [Session, setsession] = React.useState("");
   const Search = styled("div")(({ theme }) => ({
     position: "relative",
     borderRadius: theme.shape.borderRadius,
@@ -23,6 +26,15 @@ export default function ButtonAppBar() {
       width: "auto",
     },
   }));
+
+  React.useEffect(() => {
+    const checkSession = async () => {
+      const { data: session } = await getSession();
+      setsession(session);
+    };
+
+    checkSession();
+  }, []);
 
   const SearchIconWrapper = styled("div")(({ theme }) => ({
     padding: theme.spacing(0, 2),
@@ -49,6 +61,13 @@ export default function ButtonAppBar() {
       },
     },
   }));
+  const LoginClick = () => {
+    if (Session) {
+      signOut();
+    } else {
+      window.open("/login", "_blank");
+    }
+  };
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ backgroundColor: "#141528" }}>
@@ -78,8 +97,9 @@ export default function ButtonAppBar() {
             variant="contained"
             color="primary"
             style={{ fontFamily: "Josefin Sans" }}
+            onClick={LoginClick}
           >
-            Login
+            {Session ? "Log Out" : "Log In"}
           </Button>
         </Toolbar>
       </AppBar>

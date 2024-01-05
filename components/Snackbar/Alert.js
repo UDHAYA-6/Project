@@ -24,7 +24,7 @@ export default function TransitionAlerts(props) {
         top: 0,
         left: "50%",
         transform: "translateX(-50%)",
-        width: "20%",
+        width: "25%",
         margin: "20px auto",
       }}
     >

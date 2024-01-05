@@ -5,6 +5,7 @@ import { Category } from "@/components/Helper Functions/Functions";
 export default async function handler(req, res) {
   if (req.method === "POST") {
     const { Get, id } = req.body;
+    console.log(Get);
     try {
       const cl = await ConnectToDatabase();
       const client = await cl.connect();
@@ -15,7 +16,6 @@ export default async function handler(req, res) {
         const { seatNumber, name, age, gender } = seatData;
 
         const category = Category(seatNumber);
-
         const updateResult = await collection.updateOne(
           { _id: new ObjectId(id), [`Seats.${category}.seat_num`]: seatNumber },
           {

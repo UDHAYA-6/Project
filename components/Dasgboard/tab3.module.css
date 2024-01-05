@@ -4,6 +4,9 @@
   margin-left: 10rem;
   width: 100%;
   height: fit-content;
+  background-color: #d9dbfa;
+  padding: 0.5rem;
+  border-radius: 10px;
 }
 .div1,
 .div2 {

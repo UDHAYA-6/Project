@@ -4,5 +4,6 @@
 body {
   margin: 0%;
   overflow-y: scroll;
-  background-image: url("https://img.freepik.com/free-vector/flat-travel-background_23-2148050086.jpg?w=740&t=st=1704347063~exp=1704347663~hmac=3f8d121d8d13a0cc7fef5c71193f40763dfd061b28b706d854adc5dc1b088c2d");
+  background-image: url("/Back.jpg");
+  background-size: cover;
 }

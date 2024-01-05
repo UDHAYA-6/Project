@@ -1,4 +1,5 @@
 import { ConnectToDatabase } from "../../Mongodb/mongodb";
+
 export default async function handler(req, res) {
   if (req.method === "GET") {
     const { from, to } = req.query;
@@ -7,18 +8,19 @@ export default async function handler(req, res) {
       const cl = await ConnectToDatabase();
       const client = await cl.connect();
       const db = client.db("ukdb");
-      const data = await db
-        .collection("Bus")
-        .find({ Via: from, Via: to })
-        .toArray();
-      if (data.length !== 0) {
-        res.status(200).json(data);
+      const data = await db.collection("Bus").findOne({
+        Via: { $all: [from, to] },
+      });
+      if (data) {
+        const dt = [data];
+        res.status(200).json(dt);
       } else {
-        res.status(405).json({ msg: "No such data found" });
+        res.status(404).json({ msg: "No such data found" });
       }
     } catch (error) {
-      res.status(405).json({
-        msg: error.message,
+      res.status(500).json({
+        msg: "Internal Server Error",
+        error: error.message,
       });
     }
   } else {

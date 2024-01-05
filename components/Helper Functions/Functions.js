@@ -3,6 +3,9 @@ import Buses from "../../Data/Bus";
 const Bus = Buses;
 const UpdateBusStructure = (
   Bus_no,
+  BusName,
+  Arrival,
+  Departure,
   LowerSeater,
   LowerSleeper,
   UpperPrice,
@@ -27,11 +30,13 @@ const UpdateBusStructure = (
   upperSeatsleft.forEach((seat) => {
     seat.seatPrice = { $numberInt: UpperPrice.toString() };
   });
-
   Bus.Bus_no = Bus_no;
   Bus.Source = Source;
   Bus.Destination = Destination;
   Bus.Via = Via;
+  Bus.BusName = BusName;
+  Bus.Arrival = Arrival;
+  Bus.Departure = Departure;
 
   return Bus;
 };
@@ -40,8 +45,8 @@ const Category = (seatNumber) => {
   let category;
   if (seatNumber.startsWith("LS")) {
     category = "Lower.Seater";
-  } else if (seatNumber.startsWith("LB")) {
-    category = "Lower.Sleeper";
+  } else if (seatNumber.startsWith("SB")) {
+    category = "Lower.sleeper";
   } else if (seatNumber.startsWith("UR")) {
     category = "Upper.Right";
   } else if (seatNumber.startsWith("UL")) {

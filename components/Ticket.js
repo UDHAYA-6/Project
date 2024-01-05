@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import classes from "./Ticket.module.css";
 import Legand from "./Legand/Legand";
 import GenderForm from "./GenderSelection/GenderForm";
@@ -20,13 +20,22 @@ const Ticket = (props) => {
   const router = useRouter();
   const { data: session } = useSession();
   const [Show, setShow] = useState(false);
+  const [snackbarInfo, setSnackbarInfo] = useState(null);
   const [PickedSeats, setPickedSeats] = useState([]);
   const [formData, setFormData] = useState([]);
   const [MaleCount, setMaleCount] = useState(0);
   const [FemaleCount, setFemaleCount] = useState(0);
   const [fem, SetFem] = useState([]);
   const data = props.Data;
+  useEffect(() => {
+    if (snackbarInfo) {
+      const timer = setTimeout(() => {
+        setSnackbarInfo(null);
+      }, 4000);
 
+      return () => clearTimeout(timer);
+    }
+  }, [snackbarInfo]);
   const LowerSeater = Lowerseater(data.Seats.Lower.Seater);
   const UpperRight = Upperright(data.Seats.Upper.Right);
   const ReservedWomenSeats = [...LowerSeater, ...UpperRight];
@@ -94,25 +103,26 @@ const Ticket = (props) => {
       gender: formData[index]?.gender || "",
     }));
     const userSession = await getSession();
-    if (userSession) {
-      const response = await fetch("api/book", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ Get: newFormData, id: props.Data._id }),
-      });
-      const jsonData = await response.json();
-      <CustomizedSnackbars
-        type={"success"}
-        message={"Your tickets are booked"}
-      />;
-      router.push("/");
+    if (PickedSeats.length == total) {
+      if (userSession) {
+        const response = await fetch("api/book", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ Get: newFormData, id: props.Data._id }),
+        });
+        const jsonData = await response.json();
+        setSnackbarInfo({ type: "success", message: jsonData.msg });
+        function delayedFunction() {
+          props.close();
+        }
+
+        setTimeout(delayedFunction, 1000);
+      } else {
+        alert("Login to continue booking");
+        window.open("/login", "_blank");
+      }
     } else {
-      <CustomizedSnackbars
-        type={"info"}
-        message={"Please login to continue booking"}
-      />;
-      alert("Login to continue booking");
-      window.open("/login", "_blank");
+      alert("Select the seats properly");
     }
   };
 
@@ -349,6 +359,12 @@ const Ticket = (props) => {
           )}
         </div>
       </div>
+      {snackbarInfo && (
+        <CustomizedSnackbars
+          type={snackbarInfo.type}
+          message={snackbarInfo.message}
+        />
+      )}
     </div>
   );
 };

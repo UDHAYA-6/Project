@@ -8,7 +8,6 @@ import { Button } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
 import CircularProgress from "@mui/material/CircularProgress";
-import CustomizedSnackbars from "./Snackbar/Alert";
 import { styles } from "./Helper Functions/Functions";
 
 const BusSearch = (props) => {
@@ -35,8 +34,8 @@ const BusSearch = (props) => {
       setLoad(false);
       props.getData(jsonData);
     } else {
-      <CustomizedSnackbars type={"error"} message={jsonData.msg} />;
-
+      alert(jsonData.msg);
+      console.log(jsonData.msg);
       setLoad(false);
     }
   };

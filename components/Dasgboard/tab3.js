@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -18,11 +18,16 @@ const Tab3 = () => {
   const [UpperPrice, setUpperPrice] = useState("");
   const [LowerSleeper, setLowerSleeper] = useState("");
   const [LowerSeater, setLowerSeater] = useState("");
-
+  const [BusName, setBusName] = useState("");
+  const [Arrival, setArrival] = useState("");
+  const [Departure, setDeparture] = useState("");
   const FormSubmit = async (event) => {
     event.preventDefault();
     const dt = UpdateBusStructure(
       Bus_no,
+      BusName,
+      Arrival,
+      Departure,
       LowerSeater,
       LowerSleeper,
       UpperPrice,
@@ -47,10 +52,13 @@ const Tab3 = () => {
       setInputValue("");
       setBus_no("");
       setSource("");
+      setBusName("");
       setDestination("");
       setUpperPrice("");
       setLowerSleeper("");
       setLowerSeater("");
+      setArrival("");
+      setDeparture("");
     } else {
       alert(jsonData.msg + response);
     }
@@ -78,6 +86,14 @@ const Tab3 = () => {
             value={Bus_no}
             className={classes.field}
             onChange={(event) => setBus_no(event.target.value)}
+          />
+          <TextField
+            label="Bus Name"
+            variant="standard"
+            required
+            value={BusName}
+            className={classes.field}
+            onChange={(event) => setBusName(event.target.value)}
           />
           <TextField
             label="Source"
@@ -121,12 +137,32 @@ const Tab3 = () => {
             onChange={(event) => setLowerSeater(event.target.value)}
           />
           <TextField
+            sx={{ minWidth: 120 }}
+            label="Departure "
+            variant="standard"
+            required
+            value={Departure}
+            type="time"
+            className={classes.field}
+            onChange={(event) => setDeparture(event.target.value)}
+          />
+          <TextField
             required
             value={LowerSleeper}
             label="Lower Sleeper Price"
             variant="standard"
             className={classes.field}
             onChange={(event) => setLowerSleeper(event.target.value)}
+          />
+          <TextField
+            sx={{ minWidth: 120 }}
+            variant="standard"
+            label="Arrival"
+            required
+            value={Arrival}
+            type="time"
+            className={classes.field}
+            onChange={(event) => setArrival(event.target.value)}
           />
           <TextField
             required
