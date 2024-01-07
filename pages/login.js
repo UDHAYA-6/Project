@@ -107,8 +107,8 @@ const Login = () => {
           setvalue(false);
         } else {
           console.log(response);
-          alert("success");
           setvalue(false);
+          router.push("/");
           window.close();
         }
       } catch (error) {
@@ -135,6 +135,7 @@ const Login = () => {
           />;
           setvalue(false);
           window.close();
+          router.push("/");
         }
       } else {
         <CustomizedSnackbars type={"error"} message={jsonData.msg} />;

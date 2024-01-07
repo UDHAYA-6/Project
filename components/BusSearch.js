@@ -11,9 +11,16 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { styles } from "./Helper Functions/Functions";
 
 const BusSearch = (props) => {
+  const today = new Date();
+  const minDate = today.toISOString().split("T")[0];
+
+  const oneMonthLater = new Date();
+  oneMonthLater.setMonth(today.getMonth() + 1);
+  const maxDate = oneMonthLater.toISOString().split("T")[0];
   const [searchTerm, setSearchTerm] = useState(null);
   const [searchTerm2, setSearchTerm2] = useState(null);
   const [load, setLoad] = useState(false);
+  const [Datee, setDate] = useState("");
 
   const handleInputChange = (event, newValue) => {
     setSearchTerm(newValue);
@@ -33,6 +40,7 @@ const BusSearch = (props) => {
     if (response.status === 200) {
       setLoad(false);
       props.getData(jsonData);
+      props.getDate(Datee);
     } else {
       alert(jsonData.msg);
       console.log(jsonData.msg);
@@ -64,7 +72,6 @@ const BusSearch = (props) => {
       <div className={classes.right}>
         <form className={classes.form} onSubmit={formSubmit}>
           <Autocomplete
-            className={classes.Autocomplete}
             disablePortal
             options={cities}
             sx={styles}
@@ -104,6 +111,19 @@ const BusSearch = (props) => {
                 InputLabelProps={{ sx: { fontSize: "1.3rem" } }}
               />
             )}
+          />
+          <TextField
+            sx={styles}
+            type="date"
+            value={Datee}
+            onChange={() => setDate(event.target.value)}
+            className={classes.Autocomplete}
+            InputProps={{
+              inputProps: {
+                min: minDate,
+                max: maxDate,
+              },
+            }}
           />
           <Button
             variant="contained"

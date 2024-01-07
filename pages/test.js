@@ -1,47 +1,65 @@
-import * as React from "react";
-import classes from "../styles/Home.module.css";
+import React, { useEffect } from "react";
 
-export default function HorizontalCard() {
+const PayPalButton = () => {
+  useEffect(() => {
+    const loadPayPalScript = async () => {
+      const script = document.createElement("script");
+      script.src = "https://www.paypal.com/sdk/js?client-id=test&currency=USD";
+      script.async = true;
+      document.body.appendChild(script);
+
+      script.onload = () => {
+        window.paypal
+          .Buttons({
+            createOrder: (data, actions) => {
+              return actions.order.create({
+                purchase_units: [
+                  {
+                    amount: {
+                      value: "77.44",
+                    },
+                  },
+                ],
+              });
+            },
+            onApprove: (data, actions) => {
+              return actions.order.capture().then((orderData) => {
+                console.log(
+                  "Capture result",
+                  orderData,
+                  JSON.stringify(orderData, null, 2)
+                );
+                const transaction =
+                  orderData.purchase_units[0].payments.captures[0];
+                window.location.href = "/success";
+              });
+            },
+          })
+          .render("#paypal-button-container");
+      };
+    };
+
+    loadPayPalScript();
+  }, []);
+
   return (
     <div
+      id="paypal-button-container"
       style={{
-        display: "flex",
-        flexDirection: "row",
-        maxWidth: 700,
-        maxHeight: 200,
-        backgroundColor: "lightgray",
+        margin: "2%",
+        backgroundColor: "white",
+        padding: "1rem",
+        width: "300px",
+        height: "300px",
+        borderRadius: "10px",
       }}
     >
-      <img
-        width={250}
-        src="https://img.freepik.com/free-vector/travel-background-hand-drawn-style_23-2147764817.jpg?w=740&t=st=1704359392~exp=1704359992~hmac=3b6010d3e0d296f8981e23841e6ce5ccb73277ef189d175853cbc36bf9035b88"
-        alt="Bus image"
-      />
-      <div className={classes.div}>
-        <div style={{ display: "flex", justifyContent: "space-around" }}>
-          <div>
-            <span>Source: </span>
-            <span>Chennai</span>
-          </div>
-          <div>
-            <span>Tirutani express</span>
-          </div>
-          <div>
-            <span>Destination:</span>
-            <span>Salem</span>
-          </div>
-        </div>
-        <div style={{ display: "flex", justifyContent: "space-around" }}>
-          <div>
-            <span>Departure Time: </span>
-            <span>12:23</span>
-          </div>
-          <div>
-            <span>Arrival Time: </span>
-            <span>12:21</span>
-          </div>
-        </div>
-      </div>
+      <center>
+        <h1>Welcome!</h1>
+      </center>
+      {/* Placeholder for the PayPal button */}
     </div>
   );
-}
+};
+
+export default PayPalButton;

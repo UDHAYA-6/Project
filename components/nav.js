@@ -10,8 +10,22 @@ import DirectionsBusSharpIcon from "@mui/icons-material/DirectionsBusSharp";
 import SearchIcon from "@mui/icons-material/Search";
 import { getSession, signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 export default function ButtonAppBar() {
-  const [Session, setsession] = React.useState("");
+  const router = useRouter();
+  const { data: session } = useSession();
+  const [currentSession, setCurrentSession] = React.useState(session);
+
+  React.useEffect(() => {
+    const checkSession = async () => {
+      const newSession = await getSession();
+      if (JSON.stringify(newSession) !== JSON.stringify(currentSession)) {
+        setCurrentSession(newSession);
+      }
+    };
+
+    checkSession();
+  }, [session]);
   const Search = styled("div")(({ theme }) => ({
     position: "relative",
     borderRadius: theme.shape.borderRadius,
@@ -26,15 +40,6 @@ export default function ButtonAppBar() {
       width: "auto",
     },
   }));
-
-  React.useEffect(() => {
-    const checkSession = async () => {
-      const { data: session } = await getSession();
-      setsession(session);
-    };
-
-    checkSession();
-  }, []);
 
   const SearchIconWrapper = styled("div")(({ theme }) => ({
     padding: theme.spacing(0, 2),
@@ -62,11 +67,14 @@ export default function ButtonAppBar() {
     },
   }));
   const LoginClick = () => {
-    if (Session) {
+    if (session) {
       signOut();
     } else {
-      window.open("/login", "_blank");
+      router.push("/login");
     }
+  };
+  const BookingHistory = () => {
+    router.push("/History");
   };
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -78,7 +86,10 @@ export default function ButtonAppBar() {
           <Typography style={{ fontFamily: "Josefin Sans" }}>
             View Tickets
           </Typography>
-          <Typography style={{ fontFamily: "Josefin Sans" }}>
+          <Typography
+            style={{ fontFamily: "Josefin Sans" }}
+            onClick={BookingHistory}
+          >
             Booking Histroy
           </Typography>
           <Typography style={{ fontFamily: "Josefin Sans" }}>
@@ -99,7 +110,7 @@ export default function ButtonAppBar() {
             style={{ fontFamily: "Josefin Sans" }}
             onClick={LoginClick}
           >
-            {Session ? "Log Out" : "Log In"}
+            {session ? "Log Out" : "Log In"}
           </Button>
         </Toolbar>
       </AppBar>

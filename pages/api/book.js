@@ -1,21 +1,30 @@
 import { ConnectToDatabase } from "@/Mongodb/mongodb";
 import { ObjectId } from "mongodb";
 import { Category } from "@/components/Helper Functions/Functions";
-
+import { getSession } from "next-auth/react";
 export default async function handler(req, res) {
   if (req.method === "POST") {
     const { Get, id } = req.body;
+    const userSession = await getSession();
     console.log(Get);
+    console.log(userSession);
     try {
       const cl = await ConnectToDatabase();
       const client = await cl.connect();
       const db = client.db("ukdb");
       const collection = await db.collection("Bus");
-
+      const collection2 = await db.collection("Users");
       for (const seatData of Get) {
-        const { seatNumber, name, age, gender } = seatData;
+        const { seatNumber, name, age, gender, date, email } = seatData;
 
         const category = Category(seatNumber);
+        const historyObject = { seatNumber, name, age, gender, date };
+
+        const result = await collection2.updateOne(
+          { Email: email },
+          { $push: { History: historyObject } }
+        );
+
         const updateResult = await collection.updateOne(
           { _id: new ObjectId(id), [`Seats.${category}.seat_num`]: seatNumber },
           {
@@ -31,7 +40,7 @@ export default async function handler(req, res) {
           { arrayFilters: [{ "seat.seat_num": seatNumber }] }
         );
 
-        if (updateResult.modifiedCount !== 1) {
+        if (updateResult.modifiedCount !== 1 && result.modifiedCount !== 1) {
           console.error(`Failed to update seat: ${seatNumber}`);
         }
       }

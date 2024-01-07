@@ -11,14 +11,15 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Backdrop,
   Button,
 } from "@mui/material";
 import CustomizedSnackbars from "./Snackbar/Alert";
 import { Lowerseater, Upperright } from "./Helper Functions/Functions";
+import PayPalButton from "@/pages/test";
 
 const Ticket = (props) => {
   const router = useRouter();
-  const { data: session } = useSession();
   const [Show, setShow] = useState(false);
   const [snackbarInfo, setSnackbarInfo] = useState(null);
   const [PickedSeats, setPickedSeats] = useState([]);
@@ -26,6 +27,7 @@ const Ticket = (props) => {
   const [MaleCount, setMaleCount] = useState(0);
   const [FemaleCount, setFemaleCount] = useState(0);
   const [fem, SetFem] = useState([]);
+  const [open, setopen] = useState(false);
   const data = props.Data;
   useEffect(() => {
     if (snackbarInfo) {
@@ -93,17 +95,23 @@ const Ticket = (props) => {
       }
     }
   };
-
+  console.log("Datee", props.date);
   const BookTickets = async (e) => {
     e.preventDefault();
+    const userSession = await getSession();
+    const EMAIL = userSession.session.user.email;
     const newFormData = PickedSeats.map((seat, index) => ({
       seatNumber: seat,
       name: formData[index]?.name || "",
       age: formData[index]?.age || "",
       gender: formData[index]?.gender || "",
+      date: formData[index]?.date || props.date,
+      email: formData[index]?.EMAIL || EMAIL,
     }));
-    const userSession = await getSession();
+    console.log(newFormData);
+
     if (PickedSeats.length == total) {
+      setopen(true);
       if (userSession) {
         const response = await fetch("api/book", {
           method: "POST",
@@ -111,12 +119,6 @@ const Ticket = (props) => {
           body: JSON.stringify({ Get: newFormData, id: props.Data._id }),
         });
         const jsonData = await response.json();
-        setSnackbarInfo({ type: "success", message: jsonData.msg });
-        function delayedFunction() {
-          props.close();
-        }
-
-        setTimeout(delayedFunction, 1000);
       } else {
         alert("Login to continue booking");
         window.open("/login", "_blank");
@@ -365,6 +367,9 @@ const Ticket = (props) => {
           message={snackbarInfo.message}
         />
       )}
+      <Backdrop sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} open={open}>
+        <PayPalButton />
+      </Backdrop>
     </div>
   );
 };

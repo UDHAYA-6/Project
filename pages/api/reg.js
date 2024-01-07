@@ -11,9 +11,11 @@ export default async function handler(req, res) {
       if (data) {
         res.status(409).json({ msg: "User already found" });
       } else {
-        await db
-          .collection("Users")
-          .insertOne({ Name: Name, Email: Email, Password: Pass });
+        await db.collection("Users").insertOne({
+          Name: Name,
+          Email: Email,
+          Password: Pass,
+        });
         res.status(200).json({ msg: "Successfully registered" });
       }
       client.close();

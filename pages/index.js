@@ -5,11 +5,13 @@ import BusSearch from "@/components/BusSearch";
 
 const Page = () => {
   const [data, setData] = useState([]);
-
+  const [Date, setDate] = useState("");
   const handleData = (value) => {
     setData(value);
   };
-
+  const handleDate = (value) => {
+    setDate(value);
+  };
   useEffect(() => {
     if (data.length > 0) {
       window.scrollTo({ top: 700, behavior: "smooth" });
@@ -19,8 +21,8 @@ const Page = () => {
   return (
     <>
       <NavBar />
-      <BusSearch getData={handleData} />
-      {data.length > 0 && <Bus values={data} />}
+      <BusSearch getData={handleData} getDate={handleDate} />
+      {data.length > 0 && <Bus values={data} date={Date} />}
     </>
   );
 };

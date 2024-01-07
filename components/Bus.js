@@ -111,7 +111,7 @@ const Bus = (props) => {
           sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
           open={open}
         >
-          <Ticket close={ViewTicket} Data={SeletedBus} />
+          <Ticket close={ViewTicket} Data={SeletedBus} date={props.date} />
         </Backdrop>
       )}
     </div>
