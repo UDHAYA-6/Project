@@ -1,14 +1,14 @@
 import classes from "./BusSearch.module.css";
 import React, { useState } from "react";
-import cities from "../Data/cities.json";
-import Title from "./Animation/title";
+import cities from "../../Data/cities.json";
+import Title from "../Common utilities/Animation/title";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { Button } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
 import CircularProgress from "@mui/material/CircularProgress";
-import { styles } from "./Helper Functions/Functions";
+import { styles } from "../Helper Functions/Functions";
 
 const BusSearch = (props) => {
   const today = new Date();
@@ -116,6 +116,7 @@ const BusSearch = (props) => {
             sx={styles}
             type="date"
             value={Datee}
+            required
             onChange={() => setDate(event.target.value)}
             className={classes.Autocomplete}
             InputProps={{

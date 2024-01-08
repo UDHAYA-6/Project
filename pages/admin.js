@@ -12,11 +12,16 @@ import {
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import SearchAppBar from "@/components/Admin from/nav";
+import SearchAppBar from "@/components/Admin Navigations/nav";
 import CustomizedSnackbars from "../components/Snackbar/Alert";
+import { useSelector, useDispatch } from "react-redux";
+import { login } from "../components/store/reducer";
 
 const admin = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
   const [showPassword, setshowPassword] = useState(false);
   const [snackbarInfo, setSnackbarInfo] = useState(null);
   const [Email, setEmail] = useState("");
@@ -28,11 +33,17 @@ const admin = () => {
     event.preventDefault();
   };
 
+  useEffect(() => {
+    if (isLoggedIn) {
+      router.push("/dashboard");
+    }
+  }, [isLoggedIn]);
+
   const FormSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const response = await fetch("api/admin", {
+      const response = await fetch("api/fetch", {
         method: "POST",
         body: JSON.stringify({ Email, Password }),
         headers: { "Content-Type": "application/json" },
@@ -42,6 +53,7 @@ const admin = () => {
 
       if (response.status === 200) {
         setSnackbarInfo({ type: "success", message: jsonData.msg });
+        dispatch(login());
         router.push("/dashboard");
       } else {
         setSnackbarInfo({ type: "error", message: jsonData.msg });

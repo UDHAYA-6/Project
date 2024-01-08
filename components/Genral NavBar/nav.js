@@ -10,7 +10,9 @@ import DirectionsBusSharpIcon from "@mui/icons-material/DirectionsBusSharp";
 import SearchIcon from "@mui/icons-material/Search";
 import { getSession, signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
+import classes from "./nav.module.css";
 import { useRouter } from "next/router";
+import BasicMenu from "./profile";
 export default function ButtonAppBar() {
   const router = useRouter();
   const { data: session } = useSession();
@@ -26,6 +28,17 @@ export default function ButtonAppBar() {
 
     checkSession();
   }, [session]);
+
+  let initials = "AV";
+  if (session) {
+    const fullName = session.session.user.name;
+    initials = fullName
+      .split(" ")
+      .map((word) => word[0])
+      .join("")
+      .toUpperCase();
+  }
+
   const Search = styled("div")(({ theme }) => ({
     position: "relative",
     borderRadius: theme.shape.borderRadius,
@@ -67,14 +80,15 @@ export default function ButtonAppBar() {
     },
   }));
   const LoginClick = () => {
-    if (session) {
-      signOut();
-    } else {
-      router.push("/login");
-    }
+    router.push("/login");
   };
-  const BookingHistory = () => {
+  const BookingHistory = (event) => {
+    event.preventDefault();
     router.push("/History");
+  };
+  const BookTickets = (event) => {
+    event.preventDefault();
+    router.push("/");
   };
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -83,17 +97,25 @@ export default function ButtonAppBar() {
           <Typography variant="h5" style={{ fontFamily: "Diphylleia" }}>
             <DirectionsBusSharpIcon /> NewTon Travels
           </Typography>
-          <Typography style={{ fontFamily: "Josefin Sans" }}>
-            View Tickets
+          <Typography
+            style={{ fontFamily: "Josefin Sans" }}
+            onClick={BookTickets}
+            className={classes.Navcontent}
+          >
+            Book Tickets
           </Typography>
           <Typography
             style={{ fontFamily: "Josefin Sans" }}
             onClick={BookingHistory}
+            className={classes.Navcontent}
           >
             Booking Histroy
           </Typography>
-          <Typography style={{ fontFamily: "Josefin Sans" }}>
-            Cancel Tickets
+          <Typography
+            style={{ fontFamily: "Josefin Sans" }}
+            className={classes.Navcontent}
+          >
+            Terms and Condition
           </Typography>
           <Search>
             <SearchIconWrapper>
@@ -104,14 +126,19 @@ export default function ButtonAppBar() {
               inputProps={{ "aria-label": "search" }}
             />
           </Search>
-          <Button
-            variant="contained"
-            color="primary"
-            style={{ fontFamily: "Josefin Sans" }}
-            onClick={LoginClick}
-          >
-            {session ? "Log Out" : "Log In"}
-          </Button>
+
+          {session ? (
+            <BasicMenu init={initials} />
+          ) : (
+            <Button
+              variant="contained"
+              color="primary"
+              style={{ fontFamily: "Josefin Sans" }}
+              onClick={LoginClick}
+            >
+              LogIn
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
     </Box>

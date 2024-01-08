@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import classes from "./Bus.module.css";
-import Ticket from "./Ticket";
+import Ticket from "../Ticket page/Ticket";
 import { Button } from "@mui/material";
 import Backdrop from "@mui/material/Backdrop";
 import MovingIcon from "@mui/icons-material/Moving";

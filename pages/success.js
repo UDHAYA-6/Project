@@ -1,14 +1,12 @@
 import React from "react";
-import useWindowSize from "react-use/lib/useWindowSize";
 import Confetti from "react-confetti";
-import ButtonAppBar from "@/components/nav";
+import ButtonAppBar from "@/components/Genral NavBar/nav";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
 import { Button } from "@mui/material";
 import classes from "../styles/Home.module.css";
 import HomeIcon from "@mui/icons-material/Home";
 import { useRouter } from "next/router";
 export default () => {
-  const { width, height } = useWindowSize();
   const router = useRouter();
   const ButtonClick = () => {
     router.push("/");
@@ -16,7 +14,15 @@ export default () => {
   return (
     <>
       <ButtonAppBar />
-      <Confetti width={1500} height={500} style={{ overflow: "hidden" }} />
+      <center>
+        <Confetti
+          width={1200}
+          height={500}
+          style={{
+            overflow: "hidden",
+          }}
+        />
+      </center>
       <div className={classes.div}>
         <div
           style={{

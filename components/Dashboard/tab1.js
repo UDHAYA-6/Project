@@ -34,6 +34,7 @@ const Tab1 = (props) => {
   const EditClick = (id) => {
     props.Id(id);
   };
+
   const DeleteClick = async (id) => {
     const response = await fetch("api/bus", {
       method: "DELETE",

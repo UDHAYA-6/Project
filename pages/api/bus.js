@@ -21,11 +21,27 @@ export default async function handler(req, res) {
       .collection("Bus")
       .deleteOne({ _id: new ObjectId(id) });
     if (data.deletedCount === 1) {
-      res.status(200).json({ msg: "Successfullt deleted a bus" });
+      res.status(200).json({ msg: "Successfully deleted a bus" });
     } else {
       res.status(400).json({ msg: "The data is not deleted" });
     }
-  } else {
-    res.status(405).json({ msg: "Method invalid" });
+  } else if (req.method === "POST") {
+    const { dt } = req.body;
+    try {
+      const cl = await ConnectToDatabase();
+      const client = await cl.connect();
+      const db = await client.db("ukdb");
+      const data = await db.collection("Bus").insertOne(dt);
+      console.log(data);
+      if (data.acknowledged) {
+        res.status(200).json({ msg: "New bus inserted successfully" });
+      } else {
+        res.status(400).json({ msg: "failed to insert the new bus" });
+      }
+    } catch (error) {
+      res
+        .status(404)
+        .json({ msg: "Error while connecting to the database: " + error });
+    }
   }
 }

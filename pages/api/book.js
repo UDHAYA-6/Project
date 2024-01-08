@@ -14,11 +14,24 @@ export default async function handler(req, res) {
       const db = client.db("ukdb");
       const collection = await db.collection("Bus");
       const collection2 = await db.collection("Users");
+      const collection3 = await db.collection("Bus");
+      const data = await collection3.find({ _id: new ObjectId(id) }).toArray();
+      console.log("Bus Data", data);
       for (const seatData of Get) {
         const { seatNumber, name, age, gender, date, email } = seatData;
 
         const category = Category(seatNumber);
-        const historyObject = { seatNumber, name, age, gender, date };
+        const historyObject = {
+          seatNumber,
+          name,
+          age,
+          gender,
+          id: data[0]._id,
+          date,
+          source: data[0].Source,
+          destination: data[0].Destination,
+          bus_name: data[0].BusName,
+        };
 
         const result = await collection2.updateOne(
           { Email: email },
@@ -39,7 +52,7 @@ export default async function handler(req, res) {
           },
           { arrayFilters: [{ "seat.seat_num": seatNumber }] }
         );
-
+        console.log("UpdatedResult", updateResult);
         if (updateResult.modifiedCount !== 1 && result.modifiedCount !== 1) {
           console.error(`Failed to update seat: ${seatNumber}`);
         }

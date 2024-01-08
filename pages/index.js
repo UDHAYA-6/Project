@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import NavBar from "@/components/nav";
-import Bus from "@/components/Bus";
-import BusSearch from "@/components/BusSearch";
+import NavBar from "@/components/Genral NavBar/nav";
+import Bus from "@/components/Bus and Bus Search/Bus";
+import BusSearch from "@/components/Bus and Bus Search/BusSearch";
 
 const Page = () => {
   const [data, setData] = useState([]);

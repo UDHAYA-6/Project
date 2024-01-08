@@ -36,7 +36,7 @@ const Tab3 = () => {
       Via
     );
     console.log(dt);
-    const response = await fetch("api/insert", {
+    const response = await fetch("api/bus", {
       method: "POST",
       body: JSON.stringify({ dt }),
 

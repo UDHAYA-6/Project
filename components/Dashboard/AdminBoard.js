@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ButtonAppBar from "../Admin from/nav2";
+import ButtonAppBar from "../Admin Navigations/nav2";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
@@ -8,35 +8,24 @@ import TabPanel from "@mui/lab/TabPanel";
 import Tab1 from "./tab1";
 import Tab2 from "./tab2";
 import Tab3 from "./tab3";
-
+import useSWR from "swr";
 const AdminBoard = () => {
   const [value, setValue] = useState("1");
   const [Data, setData] = useState([]);
   const [Data2, setData2] = useState([]);
-
+  const fetcher = (url) => fetch(url).then((res) => res.json());
+  const { data, error, isLoading } = useSWR("/api/bus", fetcher);
   const handleChange = (event, event2) => {
     setData2([]);
     setValue(event2);
   };
   useEffect(() => {
-    const funct = async () => {
-      const response = await fetch("api/bus", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const jsonData = await response.json();
-
-      if (response.status === 200) {
-        setData(jsonData);
-      } else {
-        console.log(jsonData.msg);
-      }
-    };
-    funct();
-  }, []);
+    if (data) {
+      setData(data);
+    } else {
+      console.log(error);
+    }
+  }, [data]);
 
   const GetId = (id) => {
     setValue("2");

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import classes from "./Ticket.module.css";
-import Legand from "./Legand/Legand";
-import GenderForm from "./GenderSelection/GenderForm";
-import { TicketStyle as styles } from "./Helper Functions/Functions";
+import Legand from "../Common utilities/Legand/Legand";
+import GenderForm from "../Common utilities/GenderSelection/GenderForm";
+import { TicketStyle as styles } from "../Helper Functions/Functions";
 import { useRouter } from "next/router";
 import { getSession, useSession } from "next-auth/react";
 import {
@@ -14,9 +14,9 @@ import {
   Backdrop,
   Button,
 } from "@mui/material";
-import CustomizedSnackbars from "./Snackbar/Alert";
-import { Lowerseater, Upperright } from "./Helper Functions/Functions";
-import PayPalButton from "@/pages/test";
+import CustomizedSnackbars from "../Snackbar/Alert";
+import { Lowerseater, Upperright } from "../Helper Functions/Functions";
+import PayPalButton from "@/components/Common utilities/PayPal Payment/test";
 
 const Ticket = (props) => {
   const router = useRouter();
@@ -98,21 +98,21 @@ const Ticket = (props) => {
   console.log("Datee", props.date);
   const BookTickets = async (e) => {
     e.preventDefault();
+
     const userSession = await getSession();
-    const EMAIL = userSession.session.user.email;
-    const newFormData = PickedSeats.map((seat, index) => ({
-      seatNumber: seat,
-      name: formData[index]?.name || "",
-      age: formData[index]?.age || "",
-      gender: formData[index]?.gender || "",
-      date: formData[index]?.date || props.date,
-      email: formData[index]?.EMAIL || EMAIL,
-    }));
-    console.log(newFormData);
 
     if (PickedSeats.length == total) {
       setopen(true);
       if (userSession) {
+        const EMAIL = userSession.session.user.email;
+        const newFormData = PickedSeats.map((seat, index) => ({
+          seatNumber: seat,
+          name: formData[index]?.name || "",
+          age: formData[index]?.age || "",
+          gender: formData[index]?.gender || "",
+          date: formData[index]?.date || props.date,
+          email: formData[index]?.EMAIL || EMAIL,
+        }));
         const response = await fetch("api/book", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
