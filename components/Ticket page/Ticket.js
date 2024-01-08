@@ -131,7 +131,7 @@ const Ticket = (props) => {
   return (
     <div className={classes.div}>
       <div className={classes.div1}>
-        <span>Chennai Express</span>
+        <span>{props.Data.BusName}</span>
         <span>{props.Data.Bus_no}</span>
         <span onClick={closeWindow}>X</span>
       </div>
