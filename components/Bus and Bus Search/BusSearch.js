@@ -116,6 +116,7 @@ const BusSearch = (props) => {
             sx={styles}
             type="date"
             value={Datee}
+            style={{ marginBottom: "2rem" }}
             required
             onChange={() => setDate(event.target.value)}
             className={classes.Autocomplete}
