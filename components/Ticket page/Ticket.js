@@ -140,7 +140,14 @@ const Ticket = (props) => {
           <Legand />
           <center>Lower Deck</center>
           <div className={`${classes.UpperDeck} ${!Show ? classes.dis : " "}`}>
-            <div>hello</div>
+            <div>
+              <img
+                src="/wheel2.png"
+                width={25}
+                height={25}
+                style={{ marginTop: "-10px", padding: "0%" }}
+              />
+            </div>
             <div className={classes.UpperSeats}>
               {data.Seats.Lower.Seater.map((seat) => (
                 <div
