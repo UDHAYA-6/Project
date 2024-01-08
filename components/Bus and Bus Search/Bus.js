@@ -3,7 +3,7 @@ import classes from "./Bus.module.css";
 import Ticket from "../Ticket page/Ticket";
 import { Button } from "@mui/material";
 import Backdrop from "@mui/material/Backdrop";
-import MovingIcon from "@mui/icons-material/Moving";
+import TrendingFlatIcon from "@mui/icons-material/TrendingFlat";
 
 const Bus = (props) => {
   const [SeletedBus, setSelectedBus] = useState([]);
@@ -31,7 +31,7 @@ const Bus = (props) => {
               <div className={classes.top}>
                 <div style={{ margin: "7px 15px" }}> {item.BusName}</div>
                 <div style={{ margin: "7px 15px" }}>
-                  <span>{item.Source} </span> <MovingIcon />
+                  <span>{item.Source} </span> <TrendingFlatIcon />
                   <span> {item.Destination}</span>
                 </div>
               </div>
