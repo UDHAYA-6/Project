@@ -9,6 +9,7 @@ import Chip from "@mui/material/Chip";
 import classes from "./tab3.module.css";
 import CustomizedSnackbars from "@/components/Snackbar/Alert";
 import { UpdateBusStructure } from "../Common utilities/Helper Functions/Functions";
+import { style } from "@mui/system";
 const Tab3 = () => {
   const [Seat, setSeat] = useState("");
   const [Via, setVia] = useState([]);
@@ -77,6 +78,7 @@ const Tab3 = () => {
     const updatedVia = Via.filter((m) => m !== movie);
     setVia(updatedVia);
   };
+  const align = { margin: "1rem" };
 
   return (
     <form onSubmit={FormSubmit}>
@@ -87,7 +89,7 @@ const Tab3 = () => {
             variant="standard"
             required
             value={Bus_no}
-            className={classes.field}
+            style={align}
             onChange={(event) => setBus_no(event.target.value)}
           />
           <TextField
@@ -95,7 +97,7 @@ const Tab3 = () => {
             variant="standard"
             required
             value={BusName}
-            className={classes.field}
+            style={align}
             onChange={(event) => setBusName(event.target.value)}
           />
           <TextField
@@ -103,7 +105,7 @@ const Tab3 = () => {
             variant="standard"
             required
             value={Source}
-            className={classes.field}
+            style={align}
             onChange={(event) => setSource(event.target.value)}
           />
           <TextField
@@ -111,14 +113,10 @@ const Tab3 = () => {
             variant="standard"
             value={Destination}
             required
-            className={classes.field}
+            style={align}
             onChange={(event) => setDestination(event.target.value)}
           />
-          <FormControl
-            sx={{ minWidth: 180 }}
-            className={classes.field}
-            variant="standard"
-          >
+          <FormControl sx={{ minWidth: 180 }} style={align} variant="standard">
             <InputLabel>Total Seats</InputLabel>
             <Select
               value={Seat}
@@ -136,7 +134,7 @@ const Tab3 = () => {
             value={LowerSeater}
             label="Lower Seater Price"
             variant="standard"
-            className={classes.field}
+            style={align}
             onChange={(event) => setLowerSeater(event.target.value)}
           />
           <TextField
@@ -146,7 +144,7 @@ const Tab3 = () => {
             required
             value={Departure}
             type="time"
-            className={classes.field}
+            style={align}
             onChange={(event) => setDeparture(event.target.value)}
           />
           <TextField
@@ -154,7 +152,7 @@ const Tab3 = () => {
             value={LowerSleeper}
             label="Lower Sleeper Price"
             variant="standard"
-            className={classes.field}
+            style={align}
             onChange={(event) => setLowerSleeper(event.target.value)}
           />
           <TextField
@@ -164,7 +162,7 @@ const Tab3 = () => {
             required
             value={Arrival}
             type="time"
-            className={classes.field}
+            style={align}
             onChange={(event) => setArrival(event.target.value)}
           />
           <TextField
@@ -172,7 +170,7 @@ const Tab3 = () => {
             value={UpperPrice}
             label="Upper Deck Price"
             variant="standard"
-            className={classes.field}
+            style={align}
             onChange={(event) => setUpperPrice(event.target.value)}
           />
           <div style={{ display: "flex", alignItems: "center" }}>
@@ -181,7 +179,7 @@ const Tab3 = () => {
               variant="standard"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              className={classes.field}
+              style={align}
             />
             <Button
               variant="outlined"
