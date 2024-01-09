@@ -291,7 +291,11 @@ const Ticket = (props) => {
                   key={index + 1}
                   style={{ display: "flex", flexDirection: "row" }}
                 >
-                  <FormControl className={classes.field} sx={{ maxWidth: 100 }}>
+                  <FormControl
+                    className={classes.field}
+                    sx={{ maxWidth: 100 }}
+                    style={{ margin: "1rem 0.5rem" }}
+                  >
                     <TextField
                       sx={styles}
                       label="Seat no"
