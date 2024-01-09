@@ -38,6 +38,7 @@ const GenderForm = (props) => {
     SetDescription(false);
     updateDisableState(event.target.value, male);
   };
+
   return (
     <div className={classes.div}>
       <form onSubmit={GenderSelected} className={classes.form}>
@@ -49,6 +50,8 @@ const GenderForm = (props) => {
               <MenuItem value={1}>1</MenuItem>
               <MenuItem value={2}>2</MenuItem>
               <MenuItem value={3}>3</MenuItem>
+              <MenuItem value={4}>4</MenuItem>
+              <MenuItem value={5}>5</MenuItem>
             </Select>
           </FormControl>
         </Box>
@@ -61,6 +64,8 @@ const GenderForm = (props) => {
               <MenuItem value={1}>1</MenuItem>
               <MenuItem value={2}>2</MenuItem>
               <MenuItem value={3}>3</MenuItem>
+              <MenuItem value={4}>4</MenuItem>
+              <MenuItem value={5}>5</MenuItem>
             </Select>
           </FormControl>
         </Box>

@@ -8,8 +8,11 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Head from "./tab2head";
 import AdminBooking from "./AdminBooking";
+import CustomizedSnackbars from "@/components/Snackbar/Alert";
 const Tab2 = (props) => {
   const Data2 = props.dt;
+
+  const [snackbarInfo, setSnackbarInfo] = useState(null);
   const [show, setshow] = useState(false);
   const [seat_num, setSeat_num] = useState("");
   const [Id, setId] = useState("");
@@ -34,9 +37,10 @@ const Tab2 = (props) => {
     });
     const jsonData = await response.json();
     if (response.status === 200) {
-      alert(jsonData.msg);
+      alert("Seat booked successfully");
+      setSnackbarInfo({ type: "success", message: jsonData.msg });
     } else {
-      alert(jsonData.msg);
+      setSnackbarInfo({ type: "error", message: jsonData.msg });
     }
   };
   console.log("data2", Data2);
@@ -230,6 +234,12 @@ const Tab2 = (props) => {
           </TableBody>
         </Table>
       </TableContainer>
+      {snackbarInfo && (
+        <CustomizedSnackbars
+          type={snackbarInfo.type}
+          message={snackbarInfo.message}
+        />
+      )}
     </Paper>
   );
 };

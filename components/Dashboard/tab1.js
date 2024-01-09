@@ -1,6 +1,6 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import React from "react";
+import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import { Button } from "@mui/material";
@@ -9,9 +9,10 @@ import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-
+import CustomizedSnackbars from "@/components/Snackbar/Alert";
 import Paper from "@mui/material/Paper";
 const Tab1 = (props) => {
+  const [snackbarInfo, setSnackbarInfo] = useState(null);
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: theme.palette.common.black,
@@ -43,9 +44,10 @@ const Tab1 = (props) => {
     });
     const jsonData = await response.json();
     if (response.status === 200) {
-      alert(jsonData.msg);
+      alert("Deleted");
+      setSnackbarInfo({ type: "success", message: jsonData.msg });
     } else {
-      alert(jsonData.msg);
+      setSnackbarInfo({ type: "error", message: jsonData.msg });
     }
   };
   const Data = props.dt;
@@ -102,6 +104,12 @@ const Tab1 = (props) => {
             ))}
         </TableBody>
       </Table>
+      {snackbarInfo && (
+        <CustomizedSnackbars
+          type={snackbarInfo.type}
+          message={snackbarInfo.message}
+        />
+      )}
     </TableContainer>
   );
 };

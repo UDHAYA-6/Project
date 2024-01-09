@@ -7,10 +7,12 @@ import Select from "@mui/material/Select";
 import { Button } from "@mui/material";
 import Chip from "@mui/material/Chip";
 import classes from "./tab3.module.css";
-import { UpdateBusStructure } from "../Helper Functions/Functions";
+import CustomizedSnackbars from "@/components/Snackbar/Alert";
+import { UpdateBusStructure } from "../Common utilities/Helper Functions/Functions";
 const Tab3 = () => {
   const [Seat, setSeat] = useState("");
   const [Via, setVia] = useState([]);
+  const [snackbarInfo, setSnackbarInfo] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [Bus_no, setBus_no] = useState("");
   const [Source, setSource] = useState("");
@@ -46,7 +48,8 @@ const Tab3 = () => {
     console.log(jsonData);
     console.log(response);
     if (response.status === 200) {
-      alert(jsonData.msg);
+      alert("Successfully added");
+      setSnackbarInfo({ type: "success", message: jsonData.msg });
       setSeat("");
       setVia([]);
       setInputValue("");
@@ -60,7 +63,7 @@ const Tab3 = () => {
       setArrival("");
       setDeparture("");
     } else {
-      alert(jsonData.msg + response);
+      setSnackbarInfo({ type: "error", message: jsonData.msg });
     }
   };
   const handleAddVia = () => {
@@ -203,6 +206,12 @@ const Tab3 = () => {
       <Button type="submit" color="secondary" size="large" variant="contained">
         Add bus
       </Button>
+      {snackbarInfo && (
+        <CustomizedSnackbars
+          type={snackbarInfo.type}
+          message={snackbarInfo.message}
+        />
+      )}
     </form>
   );
 };

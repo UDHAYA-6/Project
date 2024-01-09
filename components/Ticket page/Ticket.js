@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import classes from "./Ticket.module.css";
 import Legand from "../Common utilities/Legand/Legand";
 import GenderForm from "../Common utilities/GenderSelection/GenderForm";
-import { TicketStyle as styles } from "../Helper Functions/Functions";
+import { TicketStyle as styles } from "../Common utilities/Helper Functions/Functions";
 import { useRouter } from "next/router";
-import { getSession, useSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
+import CloseIcon from "@mui/icons-material/Close";
+import { processInput } from "../Common utilities/Helper Functions/Functions";
 import {
   FormControl,
   TextField,
@@ -15,7 +17,10 @@ import {
   Button,
 } from "@mui/material";
 import CustomizedSnackbars from "../Snackbar/Alert";
-import { Lowerseater, Upperright } from "../Helper Functions/Functions";
+import {
+  Lowerseater,
+  Upperright,
+} from "../Common utilities/Helper Functions/Functions";
 import PayPalButton from "@/components/Common utilities/PayPal Payment/test";
 
 const Ticket = (props) => {
@@ -102,23 +107,25 @@ const Ticket = (props) => {
     const userSession = await getSession();
 
     if (PickedSeats.length == total) {
-      setopen(true);
       if (userSession) {
-        const EMAIL = userSession.session.user.email;
-        const newFormData = PickedSeats.map((seat, index) => ({
-          seatNumber: seat,
-          name: formData[index]?.name || "",
-          age: formData[index]?.age || "",
-          gender: formData[index]?.gender || "",
-          date: formData[index]?.date || props.date,
-          email: formData[index]?.EMAIL || EMAIL,
-        }));
-        const response = await fetch("api/book", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ Get: newFormData, id: props.Data._id }),
-        });
-        const jsonData = await response.json();
+        const userResponse = window.confirm("Do you want to confim booking");
+        if (userResponse) {
+          const EMAIL = userSession.session.user.email;
+          const newFormData = PickedSeats.map((seat, index) => ({
+            seatNumber: seat,
+            name: formData[index]?.name || "",
+            age: formData[index]?.age || "",
+            gender: formData[index]?.gender || "",
+            date: formData[index]?.date || props.date,
+            email: formData[index]?.EMAIL || EMAIL,
+          }));
+          setopen(true);
+          const response = await fetch("api/book", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ Get: newFormData, id: props.Data._id }),
+          });
+        }
       } else {
         alert("Login to continue booking");
         window.open("/login", "_blank");
@@ -128,12 +135,20 @@ const Ticket = (props) => {
     }
   };
 
+  let newv = 0;
+  PickedSeats.map((item) => {
+    newv = newv + processInput(item);
+    return newv;
+  });
+  console.log(newv);
   return (
     <div className={classes.div}>
       <div className={classes.div1}>
         <span>{props.Data.BusName}</span>
         <span>{props.Data.Bus_no}</span>
-        <span onClick={closeWindow}>X</span>
+        <span onClick={closeWindow}>
+          <CloseIcon />
+        </span>
       </div>
       <div className={classes.div2}>
         <div className={classes.left}>
@@ -289,6 +304,7 @@ const Ticket = (props) => {
                       }}
                     />
                   </FormControl>
+
                   <FormControl
                     sx={{ maxWidth: 150 }}
                     size="small"
@@ -297,6 +313,7 @@ const Ticket = (props) => {
                     <TextField
                       sx={styles}
                       label="Name"
+                      type="text"
                       variant="outlined"
                       size="small"
                       value={formData[index]?.name || ""}
@@ -306,27 +323,10 @@ const Ticket = (props) => {
                       }
                     />
                   </FormControl>
-                  <FormControl
-                    sx={{ maxWidth: 150 }}
-                    size="small"
-                    className={classes.field}
-                  >
-                    <TextField
-                      sx={styles}
-                      label="Age"
-                      variant="outlined"
-                      size="small"
-                      value={formData[index]?.age || ""}
-                      required
-                      onChange={(e) =>
-                        handleInputChange(index, "age", e.target.value)
-                      }
-                    />
-                  </FormControl>
 
                   <FormControl
                     className={classes.field}
-                    sx={{ minWidth: 150 }}
+                    sx={{ minWidth: 100 }}
                     size="small"
                   >
                     <InputLabel>Gender</InputLabel>
@@ -354,8 +354,42 @@ const Ticket = (props) => {
                       )}
                     </Select>
                   </FormControl>
+                  <FormControl
+                    sx={{ maxWidth: 70 }}
+                    size="small"
+                    className={classes.field}
+                  >
+                    <TextField
+                      sx={styles}
+                      label="Age"
+                      type="number"
+                      variant="outlined"
+                      size="small"
+                      value={formData[index]?.age || ""}
+                      required
+                      onChange={(e) =>
+                        handleInputChange(index, "age", e.target.value)
+                      }
+                      inputProps={{
+                        min: 5,
+                      }}
+                    />
+                  </FormControl>
+
+                  <FormControl className={classes.field} sx={{ maxWidth: 70 }}>
+                    <TextField
+                      sx={styles}
+                      label="Price"
+                      size="small"
+                      value={processInput(item)}
+                      InputProps={{
+                        readOnly: true,
+                      }}
+                    />
+                  </FormControl>
                 </div>
               ))}
+              <h2>Total fair: {newv}</h2>
               <Button
                 type="submit"
                 variant="contained"

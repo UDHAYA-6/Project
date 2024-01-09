@@ -6,7 +6,6 @@ import styles from "../styles/login.module.css";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import Visibility from "@mui/icons-material/Visibility";
-import CircularProgress from "@mui/material/CircularProgress";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import {
   Button,
@@ -29,6 +28,7 @@ const Login = () => {
   const [NameValid, setNameValid] = useState(true);
   const [EmailValid, setEmailValid] = useState(true);
   const [PassValid, setPassValid] = useState(true);
+  const [snackbarInfo, setSnackbarInfo] = useState(null);
   const [ConfValid, setConfValid] = useState(true);
   const [value, setvalue] = useState(false);
 
@@ -101,18 +101,21 @@ const Login = () => {
           Pass,
           redirect: false,
         });
-        if (response.error) {
-          console.log(response);
-          alert("failed");
+
+        if (!response.ok) {
+          setSnackbarInfo({ type: "error", message: "Invalid credentials" });
           setvalue(false);
         } else {
-          console.log(response);
+          setSnackbarInfo({
+            type: "success",
+            message: "You are successfully logged in",
+          });
           setvalue(false);
           router.push("/");
           window.close();
         }
       } catch (error) {
-        alert(error);
+        setSnackbarInfo({ type: "error", message: error });
       }
     } else {
       const response = await fetch("api/reg", {
@@ -128,17 +131,17 @@ const Login = () => {
           redirect: false,
         });
 
-        if (!response1.error) {
-          <CustomizedSnackbars
-            type={"success"}
-            message={"Successfully registered"}
-          />;
+        if (response.ok) {
+          setSnackbarInfo({
+            type: "success",
+            message: "Registered successfully",
+          });
           setvalue(false);
           window.close();
           router.push("/");
         }
       } else {
-        <CustomizedSnackbars type={"error"} message={jsonData.msg} />;
+        setSnackbarInfo({ type: "error", message: jsonData.msg });
         setvalue(false);
       }
     }
@@ -261,6 +264,12 @@ const Login = () => {
         </form>
       </div>
       <div className={styles.div2}></div>
+      {snackbarInfo && (
+        <CustomizedSnackbars
+          type={snackbarInfo.type}
+          message={snackbarInfo.message}
+        />
+      )}
     </div>
   );
 };

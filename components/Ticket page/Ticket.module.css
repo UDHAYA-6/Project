@@ -1,6 +1,7 @@
 .div {
   border-radius: 20px;
-  background-color: lightgray;
+
+  background: linear-gradient(to top, rgb(255, 255, 255), rgb(164, 234, 255));
   width: 100%;
 }
 .left {
@@ -18,9 +19,9 @@
   text-align: center;
 }
 .div1 span:nth-child(3) {
-  color: rgb(193, 86, 86);
+  color: rgb(245, 70, 70);
   text-align: right;
-  text-shadow: 1px 1px 1px black;
+  /* text-shadow: 1px 1px 1px black; */
 }
 .div1 span:nth-child(3):hover {
   cursor: pointer;
@@ -130,5 +131,5 @@
 }
 
 .field {
-  margin-bottom: 10px;
+  margin: 1rem 0.5rem;
 }

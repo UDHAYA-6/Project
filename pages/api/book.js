@@ -1,6 +1,6 @@
 import { ConnectToDatabase } from "@/Mongodb/mongodb";
 import { ObjectId } from "mongodb";
-import { Category } from "@/components/Helper Functions/Functions";
+import { Category } from "@/components/Common utilities/Helper Functions/Functions";
 import { getSession } from "next-auth/react";
 export default async function handler(req, res) {
   if (req.method === "POST") {

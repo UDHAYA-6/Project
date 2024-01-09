@@ -1,5 +1,4 @@
-import Buses from "../../Data/Bus";
-
+import Buses from "../../../Data/Bus";
 const Bus = Buses;
 const UpdateBusStructure = (
   Bus_no,
@@ -147,6 +146,23 @@ const Loginstyle = {
     borderColor: "white",
   },
 };
+
+function processInput(input) {
+  const prefix = input.substring(0, 2).toUpperCase();
+  switch (prefix) {
+    case "LS":
+      return 700;
+    case "SB":
+      return 1200;
+    case "UR":
+    case "UL":
+      return 1100;
+    default:
+      return "U";
+  }
+}
+
+export { processInput };
 
 export { Loginstyle };
 export { TicketStyle };

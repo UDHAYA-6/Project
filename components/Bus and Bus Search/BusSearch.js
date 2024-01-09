@@ -8,7 +8,7 @@ import { Button } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
 import CircularProgress from "@mui/material/CircularProgress";
-import { styles } from "../Helper Functions/Functions";
+import { styles } from "../Common utilities/Helper Functions/Functions";
 
 const BusSearch = (props) => {
   const today = new Date();
