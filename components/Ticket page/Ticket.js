@@ -292,7 +292,6 @@ const Ticket = (props) => {
                   style={{ display: "flex", flexDirection: "row" }}
                 >
                   <FormControl
-                    className={classes.field}
                     sx={{ maxWidth: 100 }}
                     style={{ margin: "1rem 0.5rem" }}
                   >
@@ -310,7 +309,7 @@ const Ticket = (props) => {
                   <FormControl
                     sx={{ maxWidth: 150 }}
                     size="small"
-                    className={classes.field}
+                    style={{ margin: "1rem 0.5rem" }}
                   >
                     <TextField
                       sx={styles}
@@ -327,7 +326,7 @@ const Ticket = (props) => {
                   </FormControl>
 
                   <FormControl
-                    className={classes.field}
+                    style={{ margin: "1rem 0.5rem" }}
                     sx={{ minWidth: 100 }}
                     size="small"
                   >
@@ -359,7 +358,7 @@ const Ticket = (props) => {
                   <FormControl
                     sx={{ maxWidth: 70 }}
                     size="small"
-                    className={classes.field}
+                    style={{ margin: "1rem 0.5rem" }}
                   >
                     <TextField
                       sx={styles}
@@ -378,7 +377,10 @@ const Ticket = (props) => {
                     />
                   </FormControl>
 
-                  <FormControl className={classes.field} sx={{ maxWidth: 70 }}>
+                  <FormControl
+                    sx={{ maxWidth: 70 }}
+                    style={{ margin: "1rem 0.5rem" }}
+                  >
                     <TextField
                       sx={styles}
                       label="Price"
