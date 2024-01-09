@@ -71,7 +71,7 @@ const admin = () => {
   //     return () => clearTimeout(timer);
   //   }
   // }, [snackbarInfo]);
-  const syl = { matginBottom: "1.5rem" };
+  const syl = { marginBottom: "1.5rem" };
   return (
     <>
       <SearchAppBar />
