@@ -112,7 +112,7 @@ const admin = () => {
         </FormControl>
         <Button
           sx={{ minWidth: 290 }}
-          className={classes.Control}
+          style={syl}
           type="submit"
           size="large"
           variant="contained"
