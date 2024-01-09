@@ -62,21 +62,22 @@ const admin = () => {
       setSnackbarInfo({ type: "error", message: error });
     }
   };
-  useEffect(() => {
-    if (snackbarInfo) {
-      const timer = setTimeout(() => {
-        setSnackbarInfo(null);
-      }, 4000);
+  // useEffect(() => {
+  //   if (snackbarInfo) {
+  //     const timer = setTimeout(() => {
+  //       setSnackbarInfo(null);
+  //     }, 4000);
 
-      return () => clearTimeout(timer);
-    }
-  }, [snackbarInfo]);
+  //     return () => clearTimeout(timer);
+  //   }
+  // }, [snackbarInfo]);
+  const syl = { matginBottom: "1.5rem" };
   return (
     <>
       <SearchAppBar />
       <form onSubmit={FormSubmit} className={classes.From}>
         <h1>Admin Login</h1>
-        <FormControl sx={{ minWidth: 290 }} className={classes.Control}>
+        <FormControl sx={{ minWidth: 290 }} style={syl}>
           <TextField
             label="Email"
             variant="filled"
@@ -86,11 +87,7 @@ const admin = () => {
             onChange={(event) => setEmail(event.target.value)}
           />
         </FormControl>
-        <FormControl
-          variant="filled"
-          sx={{ minWidth: 290 }}
-          className={classes.Control}
-        >
+        <FormControl variant="filled" sx={{ minWidth: 290 }} style={syl}>
           <InputLabel htmlFor="filled-adornment-password" required>
             Password
           </InputLabel>
