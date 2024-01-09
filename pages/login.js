@@ -152,6 +152,7 @@ const Login = () => {
   const ChangeVisiblity2 = () => {
     setConfEye(!ConfEye);
   };
+  const align = { marginBottom: "0.7rem" };
   return (
     <div className={styles.body}>
       <div className={styles.div1}>
@@ -182,7 +183,7 @@ const Login = () => {
           </Stack>
           <div className={styles.inputFeilds}>
             {Login !== "login" && (
-              <FormControl className={styles.Control}>
+              <FormControl style={align}>
                 <TextField
                   variant="standard"
                   label="Name"
@@ -193,7 +194,7 @@ const Login = () => {
                 />
               </FormControl>
             )}
-            <FormControl className={styles.Control}>
+            <FormControl style={align}>
               <TextField
                 variant="standard"
                 label="Email"
@@ -204,7 +205,7 @@ const Login = () => {
               />
             </FormControl>
 
-            <FormControl className={styles.Control}>
+            <FormControl style={align}>
               <TextField
                 label="Password"
                 variant="standard"
@@ -228,7 +229,7 @@ const Login = () => {
               />
             </FormControl>
             {Login !== "login" && (
-              <FormControl className={styles.Control}>
+              <FormControl style={align}>
                 <TextField
                   label="Confrim password"
                   error={!ConfValid}
