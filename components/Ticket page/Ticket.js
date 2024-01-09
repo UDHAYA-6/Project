@@ -100,7 +100,6 @@ const Ticket = (props) => {
       }
     }
   };
-  console.log("Datee", props.date);
   const BookTickets = async (e) => {
     e.preventDefault();
 
@@ -140,7 +139,6 @@ const Ticket = (props) => {
     newv = newv + processInput(item);
     return newv;
   });
-  console.log(newv);
   return (
     <div className={classes.div}>
       <div className={classes.div1}>
@@ -290,7 +288,7 @@ const Ticket = (props) => {
             <form onSubmit={BookTickets} className={classes.form}>
               {PickedSeats.map((item, index) => (
                 <div
-                  key={index}
+                  key={index + 1}
                   style={{ display: "flex", flexDirection: "row" }}
                 >
                   <FormControl className={classes.field} sx={{ maxWidth: 100 }}>

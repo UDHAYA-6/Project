@@ -3,18 +3,19 @@ import { ConnectToDatabase } from "../../Mongodb/mongodb";
 export default async function handler(req, res) {
   if (req.method === "GET") {
     const { from, to } = req.query;
-    console.log({ from, to });
 
     try {
       const cl = await ConnectToDatabase();
       const client = await cl.connect();
       const db = client.db("ukdb");
-      const data = await db.collection("Bus").findOne({
-        Via: { $all: [from, to] },
-      });
-      if (data) {
-        const dt = [data];
-        res.status(200).json(dt);
+
+      const data = await db
+        .collection("Bus")
+        .find({ Via: { $all: [from, to] } })
+        .toArray();
+      console.log(data);
+      if (data.length > 0 && from != to) {
+        res.status(200).json(data);
       } else {
         res.status(404).json({ msg: "No such data found" });
       }

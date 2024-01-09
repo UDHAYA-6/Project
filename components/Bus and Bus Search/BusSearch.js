@@ -43,7 +43,6 @@ const BusSearch = (props) => {
       props.getDate(Datee);
     } else {
       alert(jsonData.msg);
-      console.log(jsonData.msg);
       setLoad(false);
     }
   };

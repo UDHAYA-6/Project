@@ -15,7 +15,6 @@ const Bus = (props) => {
     setTicketWindow(!TicketWindow);
     setOpen(!open);
   };
-  console.log(props.values);
   return (
     <div>
       <center>
