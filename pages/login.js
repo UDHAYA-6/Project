@@ -34,6 +34,7 @@ const Login = () => {
 
   const NameChange = (event) => {
     setName(event.target.value);
+
     if (event.target.value.length < 3 && event.target.value !== "") {
       setNameValid(false);
     } else {
@@ -95,7 +96,12 @@ const Login = () => {
   const formSubmit = async (event) => {
     setvalue(true);
     event.preventDefault();
+
     if (Login == "login") {
+      if (!PassValid || !EmailValid) {
+        alert("invalid inputs");
+        return;
+      }
       try {
         const response = await signIn("credentials", {
           Email,
@@ -119,6 +125,10 @@ const Login = () => {
         setSnackbarInfo({ type: "error", message: error });
       }
     } else {
+      if (!NameValid || !PassValid || !EmailValid || !ConfValid) {
+        alert("Invalid inputs");
+        return;
+      }
       const response = await fetch("api/reg", {
         body: JSON.stringify({ Email, Pass, Name }),
         method: "POST",
