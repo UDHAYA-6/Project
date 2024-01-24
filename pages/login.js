@@ -69,13 +69,13 @@ const Login = () => {
     const passwordRegex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
     if (
-      !passwordRegex.test(event.target.value) &&
-      event.target.value !== "" &&
-      event.target.value !== Pass
+      passwordRegex.test(event.target.value) &&
+      event.target.value !== " " &&
+      event.target.value == Pass
     ) {
-      setConfValid(false);
-    } else {
       setConfValid(true);
+    } else {
+      setConfValid(false);
     }
   };
 
