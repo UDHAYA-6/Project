@@ -1,6 +1,6 @@
 import classes from "./BusSearch.module.css";
 import React, { useState } from "react";
-import cities from "../../Data/cities.json";
+import cities from "@/components/Common utilities/Data/cities.json";
 import Title from "../Common utilities/Animation/title";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";

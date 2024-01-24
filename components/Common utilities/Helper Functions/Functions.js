@@ -1,4 +1,5 @@
-import Buses from "../../../Data/Bus";
+//import Buses from "../../../Data/Bus";
+import Buses from "@/components/Common utilities/Data/Bus.json";
 const Bus = Buses;
 const UpdateBusStructure = (
   Bus_no,
