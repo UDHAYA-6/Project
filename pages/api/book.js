@@ -59,7 +59,7 @@ export default async function handler(req, res) {
       }
 
       client.close();
-      res.status(200).json({ msg: "Seats updated successfully" });
+      res.status(200).json({ msg: "Seats Booked successfully" });
     } catch (error) {
       console.error("Error updating seats:", error);
       res.status(500).json({ msg: "Internal Server Error" });
