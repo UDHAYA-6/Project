@@ -54,7 +54,8 @@ const Login = () => {
   const PassChange = (event) => {
     setPass(event.target.value);
     const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
+
     if (!passwordRegex.test(event.target.value) && event.target.value !== "") {
       setPassValid(false);
     } else {
@@ -65,7 +66,7 @@ const Login = () => {
   const ConfrimChange = (event) => {
     setConfrim(event.target.value);
     const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
     if (
       !passwordRegex.test(event.target.value) &&
       event.target.value !== "" &&
@@ -221,7 +222,7 @@ const Login = () => {
                         aria-label="toggle password visibility"
                         onClick={ChangeVisiblity}
                       >
-                        {ConfEye ? <VisibilityOff /> : <Visibility />}
+                        {PassEye ? <Visibility /> : <VisibilityOff />}
                       </IconButton>
                     </InputAdornment>
                   ),
@@ -245,7 +246,7 @@ const Login = () => {
                           aria-label="toggle password visibility"
                           onClick={ChangeVisiblity2}
                         >
-                          {ConfEye ? <VisibilityOff /> : <Visibility />}
+                          {ConfEye ? <Visibility /> : <VisibilityOff />}
                         </IconButton>
                       </InputAdornment>
                     ),
