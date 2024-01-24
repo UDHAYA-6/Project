@@ -79,10 +79,11 @@ const history = () => {
       alert(jsonData.msg);
     }
   };
+
   return (
     <>
       <ButtonAppBar />
-      {Data.length > 0 && (
+      {Array.isArray(Data) && Data.length > 0 ? (
         <TableContainer component={Paper}>
           <Table sx={{ maxWidth: 1200 }} aria-label="customized table">
             <TableHead>
@@ -102,7 +103,7 @@ const history = () => {
               </TableRow>
             </TableHead>
             <TableBody style={{ backgroundColor: "white" }}>
-              {Data[0].History ? (
+              {Data[0].History &&
                 Data[0].History.reverse().map((item, index) => (
                   <StyledTableRow key={index}>
                     <StyledTableCell component="th" scope="row">
@@ -140,15 +141,26 @@ const history = () => {
                       )}
                     </StyledTableCell>
                   </StyledTableRow>
-                ))
-              ) : (
-                <center>
-                  <h1>No bookings so far</h1>
-                </center>
-              )}
+                ))}
             </TableBody>
           </Table>
         </TableContainer>
+      ) : (
+        <center>
+          <div
+            style={{
+              backgroundColor: "green",
+              color: "white",
+              fontSize: "2rem",
+              width: "fit-content",
+              padding: "1rem",
+              marginTop: "5rem",
+              borderRadius: "7px",
+            }}
+          >
+            No bookings so far
+          </div>
+        </center>
       )}
     </>
   );

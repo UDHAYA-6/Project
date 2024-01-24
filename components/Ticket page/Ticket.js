@@ -24,7 +24,7 @@ import {
 import PayPalButton from "@/components/Common utilities/PayPal Payment/test";
 
 const Ticket = (props) => {
-  const router = useRouter();
+  const [isNameValid, setIsNameValid] = useState(true);
   const [Show, setShow] = useState(false);
   const [snackbarInfo, setSnackbarInfo] = useState(null);
   const [PickedSeats, setPickedSeats] = useState([]);
@@ -102,7 +102,10 @@ const Ticket = (props) => {
   };
   const BookTickets = async (e) => {
     e.preventDefault();
-
+    if (!isNameValid) {
+      alert("Invalid name: Must be minimum of 3 and maximum of 20");
+      return;
+    }
     const userSession = await getSession();
 
     if (PickedSeats.length == total) {
@@ -314,14 +317,23 @@ const Ticket = (props) => {
                     <TextField
                       sx={styles}
                       label="Name"
-                      type="text"
                       variant="outlined"
                       size="small"
+                      minLength={3}
+                      maxLength={20}
                       value={formData[index]?.name || ""}
                       required
-                      onChange={(e) =>
-                        handleInputChange(index, "name", e.target.value)
-                      }
+                      onChange={(e) => {
+                        const inputValue = e.target.value;
+                        const onlyAlphabets = inputValue.replace(
+                          /[^a-zA-Z]/g,
+                          ""
+                        );
+                        const truncatedValue = onlyAlphabets.slice(0, 20);
+                        const isValid = truncatedValue.length >= 3;
+                        setIsNameValid(isValid);
+                        handleInputChange(index, "name", truncatedValue);
+                      }}
                     />
                   </FormControl>
 
