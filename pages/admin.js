@@ -62,15 +62,7 @@ const admin = () => {
       setSnackbarInfo({ type: "error", message: error });
     }
   };
-  // useEffect(() => {
-  //   if (snackbarInfo) {
-  //     const timer = setTimeout(() => {
-  //       setSnackbarInfo(null);
-  //     }, 4000);
 
-  //     return () => clearTimeout(timer);
-  //   }
-  // }, [snackbarInfo]);
   const syl = { marginBottom: "1.5rem" };
   return (
     <>

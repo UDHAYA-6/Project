@@ -90,6 +90,11 @@ export default function ButtonAppBar() {
     event.preventDefault();
     router.push("/");
   };
+
+  const TermsAndCondition = (event) => {
+    event.preventDefault();
+    router.push("/Terms");
+  };
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ backgroundColor: "#141528" }}>
@@ -114,6 +119,7 @@ export default function ButtonAppBar() {
           <Typography
             style={{ fontFamily: "Josefin Sans" }}
             className={classes.Navcontent}
+            onClick={TermsAndCondition}
           >
             Terms and Condition
           </Typography>
