@@ -37,7 +37,7 @@ const Tab2 = (props) => {
     });
     const jsonData = await response.json();
     if (response.status === 200) {
-      alert("Seat booked successfully");
+      alert("Seat cancelled successfully");
       setSnackbarInfo({ type: "success", message: jsonData.msg });
     } else {
       setSnackbarInfo({ type: "error", message: jsonData.msg });
