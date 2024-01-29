@@ -39,6 +39,7 @@ const BusSearch = (props) => {
     const jsonData = await response.json();
     if (response.status === 200) {
       setLoad(false);
+      console.log(jsonData);
       props.getData(jsonData);
       props.getDate(Datee);
     } else {
