@@ -33,7 +33,7 @@ const Page = () => {
               textAlign: "center",
               padding: "20px",
               backgroundColor: "#FFEB3B",
-              marginTop: "20%",
+              marginTop: "50%",
               borderRadius: "10px",
             }}
           >
