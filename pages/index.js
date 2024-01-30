@@ -33,6 +33,8 @@ const Page = () => {
               textAlign: "center",
               padding: "20px",
               backgroundColor: "#FFEB3B",
+              marginTop: "20%",
+              borderRadius: "10px",
             }}
           >
             <p>
