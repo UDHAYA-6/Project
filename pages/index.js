@@ -31,10 +31,14 @@ const Page = () => {
           <div
             style={{
               textAlign: "center",
+              width: "70%",
               padding: "20px",
               backgroundColor: "#FFEB3B",
-              marginTop: "50%",
               borderRadius: "10px",
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%,-50%)",
             }}
           >
             <p>
