@@ -30,9 +30,9 @@ const Page = () => {
         <center>
           <div
             style={{
-              textAlign: "center",
+              textAlign: "justify",
               width: "70%",
-              padding: "20px",
+              padding: "10px",
               backgroundColor: "#FFEB3B",
               borderRadius: "10px",
               position: "absolute",
